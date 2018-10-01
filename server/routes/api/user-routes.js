@@ -175,15 +175,23 @@ router.post('/login',
                         })
                     }
                 });
-            }else{
+            } else {
                 res.status(400).json({ msg: "Invalid login" });
             }
         });
     }));
 
 router.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/users/login');
+    const sessionId = req.body.sessionId;
+    if (sessionId) {
+        UserSession.DeleteSession(sessionId, (err) => {
+            if (err) {
+                res.status(500).json({ msg: "internal server error" });
+            }
+        });
+        req.logout();
+    }
+    res.status(200).json({});
 });
 
 let GetUser = (id, res, callback) => {
