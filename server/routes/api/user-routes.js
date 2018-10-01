@@ -129,30 +129,6 @@ router.post("/validate/:id", function (req, res) {
     }
 });
 
-router.post('/login',
-    passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/users/login'
-    }, (req, res) => {
-        res.redirect('/');
-    }));
-
-router.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/users/login');
-});
-
-let GetUser = (id, res, callback) => {
-    User.findById(id, function (err, user) {
-        if (user) {
-            callback(user);
-        } else {
-            res.status(400).json({ msg: "User with that id does not exist" });
-        }
-    });
-};
-
-
 passport.use(new LocalStrategy((username, password, done) => {
     User.getUserByUsername(username, function (err, user) {
         if (err)
@@ -178,5 +154,29 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
     User.getUserById(id)
 });
+
+router.post('/login',
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/users/login'
+    }, (req, res) => {
+        res.redirect('/');
+    }));
+
+router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/users/login');
+});
+
+let GetUser = (id, res, callback) => {
+    User.findById(id, function (err, user) {
+        if (user) {
+            callback(user);
+        } else {
+            res.status(400).json({ msg: "User with that id does not exist" });
+        }
+    });
+};
+
 
 module.exports = router;
