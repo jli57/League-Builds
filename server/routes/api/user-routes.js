@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../../models/user');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 router.post('/register', (req, res) => {
     const name = req.body.name;
@@ -127,6 +129,19 @@ router.post("/validate/:id", function (req, res) {
     }
 });
 
+router.post('/login',
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/users/login'
+    }, (req, res) => {
+        res.redirect('/');
+    }));
+
+router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/users/login');
+});
+
 let GetUser = (id, res, callback) => {
     User.findById(id, function (err, user) {
         if (user) {
@@ -136,5 +151,32 @@ let GetUser = (id, res, callback) => {
         }
     });
 };
+
+
+passport.use(new LocalStrategy((username, password, done) => {
+    User.getUserByUsername(username, function (err, user) {
+        if (err)
+            throw err;
+        if (!user)
+            return done(null, false, { message: 'Unknown User' });
+
+        User.comparePassword(password, user.password, (err, isMatch) => {
+            if (err)
+                throw err;
+            if (isMatch)
+                return done(null, user);
+            else
+                return done(null, false, { message: 'Invalid password' });
+        })
+    })
+}))
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+})
+
+passport.deserializeUser((id, done) => {
+    User.getUserById(id)
+});
 
 module.exports = router;
