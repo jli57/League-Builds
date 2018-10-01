@@ -13,7 +13,7 @@ mongoose.connect(db, { useNewUrlParser: true })
     .then(() => console.log('MongoDb connected...'))
     .catch(err => console.log(err));
 
-//const userRoutes = require('./routes/user-routes');
+const userRoutes = require('./routes/api/user-routes');
 
 // declare express
 const app = express();
@@ -57,7 +57,7 @@ app.use(expressValidator({
 }));
 
 // routes 
-//app.use('/user', userRoutes);
+app.use('/user', userRoutes);
 
 // lset up port
 app.set('port', (process.env.PORT || 8000));
