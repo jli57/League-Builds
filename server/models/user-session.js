@@ -9,6 +9,11 @@ const UserSessionSchema = mongoose.Schema({
 
 const UserSession = module.exports = mongoose.model('UserSchema', UserSessionSchema);
 
+module.exports.CreateSession = (id, callback) => {
+    let session = {userId: id};
+    session.save(callback)
+}
+
 module.exports.FindSessionById = (id, callback) => {
     UserSession.findById(id, callback(err, session));
 };
