@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const UserSchema = mongoose.Schema({
-    username:{
+    username: {
         type: String,
         index: true
     },
@@ -12,7 +12,7 @@ const UserSchema = mongoose.Schema({
     email: {
         type: String
     },
-    name:{
+    name: {
         type: String
     }
 });
@@ -27,3 +27,19 @@ module.exports.createUser = (newUser, callback) => {
         })
     })
 };
+
+module.exports.getUserByUsername = (username, callback) => {
+    User.findOne({ username: username }, callback);
+};
+
+module.exports.getUserById = (id, callback) => {
+    User.findById(id, callback);
+}
+
+module.exports.comparePassword = (password, hash, callback) => {
+    bcrypt.compare(password, hash, (err, isMatch) => {
+        if (err)
+            throw err;
+        callback(null, isMatch);
+    })
+}
