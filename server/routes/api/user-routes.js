@@ -160,7 +160,25 @@ router.post('/login',
         successRedirect: '/',
         failureRedirect: '/users/login'
     }, (req, res) => {
-        res.redirect('/');
+        User.getUserByUsername(req.body.username, (err, user) => {
+            if (user) {
+                UserSession.GetSessionById(user._id, (err, session) => {
+                    if (session) {
+                        res.status(200).json({ sessionId: session._id });
+                    } else {
+                        UserSession.CreateSession(new UserSession({ userId: user._id }), (err, newSessionId) => {
+                            if (err) {
+                                res.status(500).json({ err });
+                            } else {
+                                res.status(200).json({ sessionId: newSessionId });
+                            }
+                        })
+                    }
+                });
+            }else{
+                res.status(400).json({ msg: "Invalid login" });
+            }
+        });
     }));
 
 router.get('/logout', (req, res) => {
