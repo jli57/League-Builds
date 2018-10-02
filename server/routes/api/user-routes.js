@@ -20,12 +20,12 @@ router.post("/update/:id", (req, res) => {
 });
 
 // delete user
-router.delete('/:id', function (req, res) {
+router.delete('/:id', (req, res) => {
     UserService.deleteById(req, res);
 });
 
 // confirm password
-router.post("/validate/:id", function (req, res) {
+router.post("/validate/:id", (req, res) => {
     UserService.validateUser(req, res);
 });
 
