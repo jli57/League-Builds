@@ -21,19 +21,27 @@ const User = module.exports = mongoose.model('User', UserSchema);
 
 module.exports.createUser = (newUser) => {
     return new Promise((resolve, reject) => {
+        generatePassword(newUser)
+            .then(hash => {
+                newUser.password = hash;
+                newUser.save()
+            })
+            .then(user => resolve(user))
+            .catch(err => reject(err));
+    });
+};
+
+module.exports.generatePassword = (user) => {
+    return new Promise((resolve, reject) => {
         bcrypt.genSalt(10, (err, salt) => {
             if (salt) {
-                bcrypt.hash(newUser.password, salt, (err, hash) => {
-                    if (hash) {
-                        newUser.password = hash;
-                        newUser.save()
-                            .then(user => resolve(user))
-                            .catch(err => reject(err));
-                    } else {
+                bcrypt.hash(user.password, salt, (err, hash) => {
+                    if (err)
                         reject(err);
-                    }
+                    else
+                        resolve(hash);
                 })
-            }else{
+            } else {
                 reject(err);
             }
         })
@@ -43,10 +51,10 @@ module.exports.createUser = (newUser) => {
 module.exports.getUserById = (id) => {
     return new Promise((resolve, reject) => {
         User.findById(id, (err, user) => {
-            if (user)
-                resolve(user);
-            else
+            if (err)
                 reject(err);
+            else
+                resolve(user);
         });
     });
 }
@@ -54,10 +62,10 @@ module.exports.getUserById = (id) => {
 module.exports.getUserByProperty = (property) => {
     return new Promise((resolve, reject) => {
         User.findOne(property, (err, user) => {
-            if (user)
-                resolve(user);
+            if (err)
+                reject(err)
             else
-                reject(err);
+                resolve(user);
         });
     });
 };
@@ -65,11 +73,22 @@ module.exports.getUserByProperty = (property) => {
 module.exports.comparePassword = (password, hash) => {
     return new Promise((resolve, reject) => {
         bcrypt.compare(password, hash, (err, isMatch) => {
-            if (isMatch)
-                resolve(isMatch);
-            else
+            if (err)
                 reject(err);
+            else
+                resolve(isMatch);
         })
     });
 }
+
+module.exports.deleteById = (id) => {
+    return new Promise((resolve, reject) => {
+        User.findByIdAndDelete(id, (err, user) => {
+            if (err)
+                reject(err);
+            else
+                resolve(user);
+        })
+    });
+};
 
