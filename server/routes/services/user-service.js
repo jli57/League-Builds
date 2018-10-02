@@ -9,31 +9,6 @@ const UserService = function () {
         return await User.getUserByProperty(email);
     }
 
-    async function validatePassword(username, password) {
-        getUserByUsername(username)
-            .then(user => User.comparePassword(password, user.password))
-            .then(isMatch => { return isMatch })
-            .catch(err => {
-                console.log(`validatePassword: ${err}`);
-                throw err;
-            });
-    }
-
-    async function validateUser(req, res) {
-        getUserByUsername({ username: req.username })
-            .then(user => User.comparePassword(req.password, user.password))
-            .then(isMatch => {
-                if (isMatch)
-                    res.status(200).json({})
-                else
-                    res.status(400).json({ error: 'Invalid username/password combination' })
-            })
-            .catch(err => {
-                console.log(`validateUser: ${err}`);
-                res.status(500).json({ error: 'Server error' })
-            });
-    }
-
     async function registerUser(req, res) {
         try {
             const email = await getUserByEmail({ email: req.body.email });
@@ -65,7 +40,32 @@ const UserService = function () {
         }
     }
 
-    async function updateUser(req, res) {
+    function validatePassword(username, password) {
+        getUserByUsername(username)
+            .then(user => User.comparePassword(password, user.password))
+            .then(isMatch => { return isMatch })
+            .catch(err => {
+                console.log(`validatePassword: ${err}`);
+                throw err;
+            });
+    }
+
+    function validateUser(req, res) {
+        getUserByUsername({ username: req.username })
+            .then(user => User.comparePassword(req.password, user.password))
+            .then(isMatch => {
+                if (isMatch)
+                    res.status(200).json({})
+                else
+                    res.status(400).json({ error: 'Invalid username/password combination' })
+            })
+            .catch(err => {
+                console.log(`validateUser: ${err}`);
+                res.status(500).json({ error: 'Server error' })
+            });
+    }
+
+    function updateUser(req, res) {
         validatePassword(req.username, req.password)
             .then(isMatch => {
                 if (isMatch)
