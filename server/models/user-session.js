@@ -4,20 +4,18 @@ const UserSessionSchema = mongoose.Schema({
     userId = {
         type: String,
     },
-    time    
 });
 
 const UserSession = module.exports = mongoose.model('UserSchema', UserSessionSchema);
 
-module.exports.CreateSession = (id, callback) => {
-    let session = {userId: id};
-    session.save(callback)
+module.exports.createSession = async (id) => {
+    return await { userId: id }.save();
 }
 
-module.exports.FindSessionById = (id, callback) => {
-    UserSession.findById(id, callback(err, session));
+module.exports.findSessionById = async (id) => {
+    return await UserSession.findById(id);
 };
 
-module.exports.DeleteSession = (id, callback) => {
-    UserSession.deleteOne(id, callback(err));
+module.exports.deleteSession = async (id) => {
+    return await UserSession.deleteOne(id);
 }
