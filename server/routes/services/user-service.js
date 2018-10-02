@@ -113,6 +113,10 @@ const UserService = function () {
             })
     };
 
+    function login(req, res){};
+
+    function logout(req, res){};
+
     return {
         getUserById: getUserById,
         getUserByUsername: getUserByUsername,
