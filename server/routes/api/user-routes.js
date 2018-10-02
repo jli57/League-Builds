@@ -5,58 +5,27 @@ const UserService = require('../services/user-service');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-router.post('/register', (req, res) => {    
+router.post('/register', (req, res) => {
     UserService.registerUser(req, res);
 });
 
 // retrieve user
-router.get('/:id', (req, res) => {    
+router.get('/:id', (req, res) => {
     UserService.getUserById(req, res);
 });
 
 // update user
-router.post("/update/:id", function (req, res) {
-    GetUser(req.params.id, res, (user) => {
-        req.checkBody('email', 'Email  is required').notEmpty();
-        req.checkBody('email', 'Email is not valid').isEmail();
-        req.checkBody('password', 'Name is required').notEmpty();
-        req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-
-        let err = req.validationErrors();
-        if (err) {
-            res.status(400).json(err);
-        } else {
-            user.email = req.body.email;
-            user.name = req.body.name;
-            User.generatePassword(req.body.password, function (err, hash) {
-                if (hash) {
-                    user.password = hash;
-                    user.save(function (err, callback) {
-                        if (callback) {
-                            res.status(200).json({});
-                        } else {
-                            res.status(500).json({
-                                error: "Password couldn't be updated"
-                            });
-                        }
-                    })
-                } else {
-                    res.status(500).json({
-                        error: "Password couldn't be updated"
-                    });
-                }
-            });
-        }
-    });
+router.post("/update/:id", (req, res) => {
+    updateUser(req, res);
 });
 
 // delete user
-router.delete('/:id', function (req, res) {    
+router.delete('/:id', function (req, res) {
     UserService.deleteById(req, res);
 });
 
 // confirm password
-router.post("/validate/:id", function (req, res) {    
+router.post("/validate/:id", function (req, res) {
     UserService.validateUser(req, res);
 });
 
