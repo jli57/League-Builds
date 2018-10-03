@@ -19,33 +19,14 @@ const UserSchema = mongoose.Schema({
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
-module.exports.createUser = (newUser) => {
-    return new Promise((resolve, reject) => {
-        User.generatePassword(newUser)
-            .then(hash => {
-                newUser.password = hash;
-                newUser.save()
-            })
-            .then(user => resolve(user))
-            .catch(err => reject(err));
-    });
+module.exports.createUser = async (newUser) => {
+    newUser.password = await User.generatePassword(newUser);
+    return await newUser.save();
 };
 
-module.exports.generatePassword = (user) => {
-    return new Promise((resolve, reject) => {
-        bcrypt.genSalt(10, (err, salt) => {
-            if (salt) {
-                bcrypt.hash(user.password, salt, (err, hash) => {
-                    if (err)
-                        reject(err);
-                    else
-                        resolve(hash);
-                })
-            } else {
-                reject(err);
-            }
-        })
-    });
+module.exports.generatePassword = async (user) => {
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(user.password, salt);    
 };
 
 module.exports.getUserById = (id) => {

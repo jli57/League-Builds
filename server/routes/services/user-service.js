@@ -1,4 +1,5 @@
 const User = require('../../models/user');
+const HttpError = require('../../errors/HttpError') ;
 
 const UserService = function () {
     async function getUserByUsername(username) {
@@ -9,36 +10,30 @@ const UserService = function () {
         return await User.getUserByProperty(email);
     }
 
-    async function registerUser(req, res) {
+    async function registerUser(application) {
         try {
-            const email = await getUserByEmail({ email: req.body.email });
-            const username = await getUserByUsername({ username: req.body.username });
+            const email = await getUserByEmail({ email: application.email });
+            const username = await getUserByUsername({ username: application.username });
 
             let errors = [];
             if (email)
                 errors.push({ param: 'email', msg: 'Email already in use' });
             if (username)
                 errors.push({ param: 'username', msg: 'Username already in use' });
-            if (errors.length > 0){
-                console.log(errors);
-                res.status(400).json({ errors: errors });
+            if (errors.length > 0) {
+                throw new HttpError(ex.msg, 406);
             }
             else {
-                User.createUser(new User({
-                    username: req.body.username,
-                    password: req.body.password,
-                    email: req.body.email,
-                    name: req.body.name
-                }))
-                    .then(user => res.status(200).json({ user: user }))
-                    .catch(err => {
-                        console.log(`registerUser: ${err}`)
-                        res.status(500).json({})
-                    });
+                return await User.createUser(new User({
+                    username: application.username,
+                    password: application.password,
+                    email: application.email,
+                    name: application.name
+                }));
             }
         } catch (ex) {
-            console.log(`registerUser: ${ex}`)
-            res.status(500).json({})
+            console.log(ex);
+            throw new HttpError(ex.msg, ex.statusCode);
         }
     }
 
@@ -115,9 +110,9 @@ const UserService = function () {
             })
     };
 
-    function login(req, res){};
+    function login(req, res) { };
 
-    function logout(req, res){};
+    function logout(req, res) { };
 
     return {
         getUserById: getUserById,

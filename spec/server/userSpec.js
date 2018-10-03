@@ -4,10 +4,12 @@ describe("User", function () {
         baseURL: 'http://localhost:8000/'
     };
     const user = {
-        username: 'test_username',
-        password: 'password123',
-        email: 'example@domain.test',
-        name: 'john doe'
+        application: {
+            username: 'test_username',
+            password: 'password123',
+            email: 'example@domain.test',
+            name: 'john doe'
+        }
     }
 
     let res = null;
@@ -51,7 +53,7 @@ describe("User", function () {
         // expect(res.data.name).toBe(user.name);
     });
 
-    it("should retrieve delete", async (done) => {
+    it("should delete", async (done) => {
         // // delete
         // res = await axios.delete(`/user/${user._id}`, config);
         // expect(res.status).toBe(200);

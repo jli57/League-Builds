@@ -1,4 +1,5 @@
 const Session = require('../../models/session');
+const HttpError = require('../../errors/HttpError') ;
 
 const SessionService = function () {
     const getSession = async (id) => {
@@ -9,8 +10,12 @@ const SessionService = function () {
         throw new URIError('Not implemented');
     }
 
-    const createSession = async (user_id) => {
-        throw new URIError('Not implemented');
+    const createSession = async (userId) => {
+        try {
+            return await Session.create(userId);
+        } catch (err) {
+            throw new HttpError(err.msg, 500)
+        }
     }
 
     return {
@@ -20,4 +25,4 @@ const SessionService = function () {
     }
 }();
 
-modules.export = SessionService;
+module.exports = SessionService;

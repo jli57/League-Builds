@@ -4,9 +4,10 @@ const User = require('../../models/user');
 const UserService = require('../services/user-service');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const UserController = require('../controller/user-controller');
 
 router.post('/register', (req, res) => {
-    UserService.registerUser(req, res);
+    UserController.register(req, res);
 });
 
 // retrieve user
@@ -29,69 +30,15 @@ router.post("/validate/:id", (req, res) => {
     UserService.validateUser(req, res);
 });
 
-passport.use(new LocalStrategy((username, password, done) => {
-    User.getUserByUsername(username, function (err, user) {
-        if (err)
-            throw err;
-        if (!user)
-            return done(null, false, { message: 'Unknown User' });
 
-        User.comparePassword(password, user.password, (err, isMatch) => {
-            if (err)
-                throw err;
-            if (isMatch)
-                return done(null, user);
-            else
-                return done(null, false, { message: 'Invalid password' });
-        })
-    })
-}))
 
-passport.serializeUser((user, done) => {
-    done(null, user.id);
-})
-
-passport.deserializeUser((id, done) => {
-    User.getUserById(id)
+router.post('/login', (req, res) => {
+    UserController.login();
 });
-
-router.post('/login',
-    passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/users/login'
-    }, (req, res) => {
-        User.getUserByUsername(req.body.username, (err, user) => {
-            if (user) {
-                UserSession.GetSessionById(user._id, (err, session) => {
-                    if (session) {
-                        res.status(200).json({ sessionId: session._id });
-                    } else {
-                        UserSession.CreateSession(new UserSession({ userId: user._id }), (err, newSessionId) => {
-                            if (err) {
-                                res.status(500).json({ err });
-                            } else {
-                                res.status(200).json({ sessionId: newSessionId });
-                            }
-                        })
-                    }
-                });
-            } else {
-                res.status(400).json({ msg: "Invalid login" });
-            }
-        });
-    }));
+        
 
 router.get('/logout', (req, res) => {
-    const sessionId = req.body.sessionId;
-    if (sessionId) {
-        UserSession.DeleteSession(sessionId, (err) => {
-            if (err) {
-                res.status(500).json({ msg: "internal server error" });
-            }
-        });
-        req.logout();
-    }
-    res.status(200).json({});
+    UserController.login();
 });
 
 let GetUser = (id, res, callback) => {

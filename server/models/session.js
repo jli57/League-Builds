@@ -1,21 +1,22 @@
 const mongoose = require('mongoose');
 
-const UserSessionSchema = mongoose.Schema({
-    userId = {
+const SessionSchema = mongoose.Schema({
+    userId : {
         type: String,
     },
 });
 
-const UserSession = module.exports = mongoose.model('UserSchema', UserSessionSchema);
-
-module.exports.createSession = async (id) => {
-    return await { userId: id }.save();
-}
+const Session = module.exports = mongoose.model('Session', SessionSchema);
 
 module.exports.findSessionById = async (id) => {
-    return await UserSession.findById(id);
+    return await Session.findById(id);
 };
 
 module.exports.deleteSession = async (id) => {
-    return await UserSession.deleteOne(id);
+    return await Session.deleteOne(id);
+}
+
+module.exports.create = async (id) => {
+    const session = new Session({userId: id});
+    return await session.save();
 }
