@@ -1,4 +1,5 @@
 import React from 'react';
+import { fetchChampionSkillIcon } from '../../utils/api_util';
 
 class ChampionSpells extends React.Component {
   constructor(props) {
@@ -19,16 +20,16 @@ class ChampionSpells extends React.Component {
       <table className="spells-table">
         <thead>
           <tr>
-            <td>Key</td>
-            <td>Spell Name</td>
+            <td>Spell</td>
             <td>Spell Description</td>
           </tr>
         </thead>
         <tbody>
           { this.props.spells.map( (spell, i) => (
               <tr key={i}>
-                <td>{ this.getSkillKey(i) }</td>
-                <td>{spell.name}</td>
+                <td><img src={fetchChampionSkillIcon(spell.image.full)}></img>
+                <p>{spell.name}</p>
+                </td>
                 <td>{spell.description}</td>
               </tr>
             ))
