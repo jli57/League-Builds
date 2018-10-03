@@ -6,12 +6,15 @@ const UserController = function () {
         try {
             // validate username, email, password correctness
 
-            const user = await UserService.registerUser(req.body.application);            
+            const user = await UserService.registerUser(req.body.application);
             const session = await SessionService.createSession(user._id);
-                        
-            res.status(201).json({ session: session._id});
+
+            res.status(201).json({ session: session._id });
         } catch (ex) {
-            res.status(ex.statusCode).json({ errors: errors });
+            if (ex.statusCode)
+                res.status(ex.statusCode).json({ errors: ex.msg });
+            else
+                res.status(500).json({ errors: ex.msg });                
         }
     };
 

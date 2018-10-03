@@ -33,23 +33,12 @@ router.post("/validate/:id", (req, res) => {
 
 
 router.post('/login', (req, res) => {
-    UserController.login();
+    UserController.login(req, res);
 });
         
 
 router.get('/logout', (req, res) => {
-    UserController.login();
+    UserController.login(req, res);
 });
-
-let GetUser = (id, res, callback) => {
-    User.findById(id, function (err, user) {
-        if (user) {
-            callback(user);
-        } else {
-            res.status(400).json({ msg: "User with that id does not exist" });
-        }
-    });
-};
-
 
 module.exports = router;

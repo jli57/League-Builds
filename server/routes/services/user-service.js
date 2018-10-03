@@ -11,7 +11,7 @@ const UserService = function () {
     }
 
     async function registerUser(application) {
-        try {
+        //try {
             const email = await getUserByEmail({ email: application.email });
             const username = await getUserByUsername({ username: application.username });
 
@@ -31,10 +31,10 @@ const UserService = function () {
                     name: application.name
                 }));
             }
-        } catch (ex) {
-            console.log(ex);
-            throw new HttpError(ex.msg, ex.statusCode);
-        }
+        // } catch (ex) {
+        //     console.log(ex);
+        //     throw new HttpError(ex.msg, ex.statusCode);
+        // }
     }
 
     function validatePassword(username, password) {
