@@ -11,7 +11,7 @@ router.post('/register', (req, res) => {
 });
 
 // retrieve user
-router.get('/:id', (req, res) => {
+router.get('/session/:id', (req, res) => {
     UserController.retrieveUser(req, res);
 });
 

@@ -30,7 +30,7 @@ describe("User", function () {
 
     it("should retrieve user data", async (done) => {
         try {
-            res = await axios.get(`/user/${session}`, config);
+            res = await axios.get(`/user/session/${session}`, config);
             
             expect(res.status).toBe(200);
             expect(res.data._id).toBeUndefined();
