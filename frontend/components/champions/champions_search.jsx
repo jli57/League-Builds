@@ -1,5 +1,6 @@
 import React from 'react';
 import ChampionsIndex from './champions_index';
+import { filterChampions } from '../../reducers/selectors'
 
 class ChampionsSearch extends React.Component {
   constructor(props) {
@@ -17,17 +18,17 @@ class ChampionsSearch extends React.Component {
   setSearchTerm(e) {
     e.preventDefault();
     const searchTerm = e.target.value;
-    this.setState({ setSearchTerm })
-      .then( () => console.log("Search Champions") );
+    this.setState({searchTerm});
   }
 
   render() {
+    const searchResult = filterChampions( this.props.champions, this.state.searchTerm);
     return (
       <div>
-        <label>Search
-          <input type="text" onChange={ this.setSearchTerm } value={ this.state.searchTerm }/>
-        </label>
-        <ChampionsIndex champions={this.props.champions} />
+        <h1>All Champions</h1>
+        <input type="text" onChange={ this.setSearchTerm } value={ this.state.searchTerm }/>
+        <p>Result: { searchResult.length }</p>
+        <ChampionsIndex champions={ searchResult } />
       </div>
     )
   }
