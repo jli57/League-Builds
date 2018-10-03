@@ -21,7 +21,7 @@ const User = module.exports = mongoose.model('User', UserSchema);
 
 module.exports.createUser = (newUser) => {
     return new Promise((resolve, reject) => {
-        generatePassword(newUser)
+        User.generatePassword(newUser)
             .then(hash => {
                 newUser.password = hash;
                 newUser.save()

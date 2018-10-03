@@ -12,15 +12,17 @@ const UserService = function () {
     async function registerUser(req, res) {
         try {
             const email = await getUserByEmail({ email: req.body.email });
-            const username = await getUserByEmail({ username: req.body.username });
+            const username = await getUserByUsername({ username: req.body.username });
 
             let errors = [];
             if (email)
                 errors.push({ param: 'email', msg: 'Email already in use' });
             if (username)
                 errors.push({ param: 'username', msg: 'Username already in use' });
-            if (errors.length > 0)
+            if (errors.length > 0){
+                console.log(errors);
                 res.status(400).json({ errors: errors });
+            }
             else {
                 User.createUser(new User({
                     username: req.body.username,
@@ -28,7 +30,7 @@ const UserService = function () {
                     email: req.body.email,
                     name: req.body.name
                 }))
-                    .then(user => res.status(200).json({ user }))
+                    .then(user => res.status(200).json({ user: user }))
                     .catch(err => {
                         console.log(`registerUser: ${err}`)
                         res.status(500).json({})
