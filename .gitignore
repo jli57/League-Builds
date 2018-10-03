@@ -1,5 +1,5 @@
 node_modules/
 bundle.js
 bundle.js.map
-frontend/api_key.js
+api_key.js
 server/config/**
