@@ -10,20 +10,38 @@ describe("User", function () {
         name: 'john doe'
     }
 
-
+    let res = null;
+    let session = null;
     it("should create a user", async (done) => {
-        // create
-        try{
-            let res = await axios.post('/user/register', user, config);
-            expect(res.status).toBe(200);
-            user._id = res.data._id;
-            console.log(res.data);
-        }catch(ex){
+        try {
+            res = await axios.post('/user/register', user, config);
+            expect(res.status).toBe(201);
+            expect(res.data.user).not.toEqual({});
+
+            user._id = res.data.user_id;
+        } catch (ex) {
+            done.fail(ex.message);
+        } finally {
+            done();
+        }
+    });
+
+    it("should login", async (done) => {
+        try {
+            res = await axios.post('/user/login', user, config);
+
+            expect(res.status).toBe(201)
+            expect(res.data.session).not.toBeUndefined();
+            session = res.data.session;
+        } catch (ex) {
             done.fail(ex.message);
         }
-        
-        
+        finally {
+            done();
+        }
+    });
 
+    it("should retrieve user data", async (done) => {
         // // retrieve
         // res = await axios.get(`/user/${user._id}`, config);
         // expect(res.status).toBe(200);
@@ -31,16 +49,11 @@ describe("User", function () {
         // expect(res.data._id).toBe(user._id);
         // expect(res.data.email).toBe(user.email);
         // expect(res.data.name).toBe(user.name);
+    });
 
+    it("should retrieve delete", async (done) => {
         // // delete
         // res = await axios.delete(`/user/${user._id}`, config);
         // expect(res.status).toBe(200);
-
-        done();
     });
-
-    it('blah', () => {
-        console.log(true);
-        expect(true).toBe(true);
-    })
 });
