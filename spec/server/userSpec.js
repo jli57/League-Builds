@@ -20,43 +20,69 @@ describe("User", function () {
             expect(res.status).toBe(201);
             expect(res.data.user).not.toEqual({});
 
-            user._id = res.data.user_id;
+            session = res.data.session;
         } catch (ex) {
-            //console.log(ex.status);
-            done.fail(`status: ${ex.status}`);
+            console.log(ex);
+            done.fail(ex.message);
         } finally {
             done();
         }
     });
 
-    it("should login", async (done) => {
+    it("should retrieve user data", async (done) => {
         try {
-            res = await axios.post('/user/login', user, config);
-
-            expect(res.status).toBe(201)
-            expect(res.data.session).not.toBeUndefined();
-            session = res.data.session;
+            res = await axios.get(`/user/${session}`, config);
+            
+            expect(res.status).toBe(200);
+            expect(res.data._id).toBeUndefined();
+            expect(res.data.password).toBeUndefined();
+            expect(res.data.username).toBe(user.username);
+            expect(res.data.email).toBe(user.email);
+            expect(res.data.name).toBe(user.name);
         } catch (ex) {
             done.fail(ex.message);
-        }
-        finally {
+        } finally {
             done();
         }
     });
 
-    it("should retrieve user data", async (done) => {
-        // // retrieve
-        // res = await axios.get(`/user/${user._id}`, config);
-        // expect(res.status).toBe(200);
-        // expect(res.data.username).toBe(user.username); 
-        // expect(res.data._id).toBe(user._id);
-        // expect(res.data.email).toBe(user.email);
-        // expect(res.data.name).toBe(user.name);
+    it("should logout", async (done) => {
+        // try {
+        //     res = await axios.post('/user/login', user, config);
+
+        //     expect(res.status).toBe(201)
+        //     expect(res.data.session).not.toBeUndefined();
+        //     session = res.data.session;
+        // } catch (ex) {
+        //     done.fail(ex.message);
+        // }
+        // finally {
+        //     done();
+        // }
+        done.fail('unimplemented');
+    });
+
+    it("should login", async (done) => {
+        // try {
+        //     res = await axios.post('/user/login', user, config);
+
+        //     expect(res.status).toBe(201)
+        //     expect(res.data.session).not.toBeUndefined();
+        //     session = res.data.session;
+        // } catch (ex) {
+        //     done.fail(ex.message);
+        // }
+        // finally {
+        //     done();
+        // }
+        done.fail('unimplemented');
     });
 
     it("should delete", async (done) => {
         // // delete
         // res = await axios.delete(`/user/${user._id}`, config);
         // expect(res.status).toBe(200);
+        done.fail('unimplemented');
     });
+
 });

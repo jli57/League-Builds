@@ -12,7 +12,7 @@ router.post('/register', (req, res) => {
 
 // retrieve user
 router.get('/:id', (req, res) => {
-    UserService.getUserById(req, res);
+    UserController.retrieveUser(req, res);
 });
 
 // update user
@@ -29,8 +29,6 @@ router.delete('/:id', (req, res) => {
 router.post("/validate/:id", (req, res) => {
     UserService.validateUser(req, res);
 });
-
-
 
 router.post('/login', (req, res) => {
     UserController.login(req, res);

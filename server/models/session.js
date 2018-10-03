@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const SessionSchema = mongoose.Schema({
     userId : {
         type: String,
+        index: true
     },
 });
 

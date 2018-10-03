@@ -1,9 +1,13 @@
 const Session = require('../../models/session');
-const HttpError = require('../../errors/HttpError') ;
+const HttpError = require('../../errors/HttpError');
 
 const SessionService = function () {
     const getSession = async (id) => {
-        throw new URIError('Not implemented');
+        try {
+            return await Session.findSessionById(id);
+        } catch (er) {
+            throw new HttpError('Session does not exist?', 501);
+        }
     };
 
     const deleteSession = async (id) => {
