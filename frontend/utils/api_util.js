@@ -23,3 +23,7 @@ export const fetchChampionData = (championName, callback) => {
   return $.getJSON(`http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/champion/${championName}.json`,
       callback )
 }
+
+export const fetchChampionSkillIcon = (spellName) => (
+  `http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/${spellName}`
+)
