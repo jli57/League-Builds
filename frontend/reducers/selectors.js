@@ -5,7 +5,9 @@ export const allChampions = ({champions}) => {
 
 export const filterChampions = (champions, searchTerm) => {
   if ( searchTerm !== "" ) {
-    return champions.filter((champion) => champion.name.includes(searchTerm));
+    return champions.filter((champion) => (
+      champion.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ));
   }
-  return champions; 
+  return champions;
 }
