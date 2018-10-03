@@ -1,11 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import ChampionSearchContainer from './champions/champions_search_container';
+import App from './app.jsx';
 
 const Root = ({store}) => {
   return (
     <Provider store={store}>
-      <ChampionSearchContainer />
+      <App />
     </Provider>
   );
 };
