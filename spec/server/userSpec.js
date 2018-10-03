@@ -22,8 +22,8 @@ describe("User", function () {
 
             user._id = res.data.user_id;
         } catch (ex) {
-            console.log(ex);
-            done.fail(ex.message);
+            //console.log(ex.status);
+            done.fail(`status: ${ex.status}`);
         } finally {
             done();
         }
