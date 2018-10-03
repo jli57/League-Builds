@@ -76,6 +76,22 @@ describe("User", function () {
         done.fail('unimplemented');
     });
 
+    it("should update", async (done) => {
+        // try {
+        //     res = await axios.post('/user/login', user, config);
+
+        //     expect(res.status).toBe(201)
+        //     expect(res.data.session).not.toBeUndefined();
+        //     session = res.data.session;
+        // } catch (ex) {
+        //     done.fail(ex.message);
+        // }
+        // finally {
+        //     done();
+        // }
+        done.fail('unimplemented');
+    });
+
     it("should delete", async (done) => {
         // // delete
         // res = await axios.delete(`/user/${user._id}`, config);
