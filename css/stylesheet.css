@@ -35,13 +35,13 @@ h1 {
 
 }
 
-table * {
+table tr,td {
   border: 1px solid black;
   padding: 5px;
 }
 
 table {
-  margin: 5px; 
+  margin: 5px;
 }
 
 .spells-table tr td:last-of-type {
