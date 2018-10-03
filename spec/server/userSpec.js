@@ -21,12 +21,11 @@ describe("User", function () {
             expect(res.data.user).not.toEqual({});
 
             session = res.data.session;
+            done();
         } catch (ex) {
             console.log(ex);
             done.fail(ex.message);
-        } finally {
-            done();
-        }
+        } 
     });
 
     it("should retrieve user data", async (done) => {
@@ -39,10 +38,9 @@ describe("User", function () {
             expect(res.data.username).toBe(user.username);
             expect(res.data.email).toBe(user.email);
             expect(res.data.name).toBe(user.name);
+            done();
         } catch (ex) {
             done.fail(ex.message);
-        } finally {
-            done();
         }
     });
 
