@@ -28,7 +28,7 @@ class ChampionsSearch extends React.Component {
         <h1>All Champions</h1>
         <input type="text" onChange={ this.setSearchTerm } value={ this.state.searchTerm }/>
         <p>Result: { searchResult.length }</p>
-        <ChampionsIndex champions={ searchResult } />
+        <ChampionsIndex champions={ searchResult } fetchChampionData={this.props.fetchChampionData} />
       </section>
     )
   }

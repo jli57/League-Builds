@@ -1,14 +1,16 @@
 import { connect } from 'react-redux';
 import ChampionsSearch from './champions_search';
 import { fetchChampions } from '../../actions/champion_actions';
-import { allChampions } from '../../reducers/selectors';
+import { fetchChampionData } from '../../actions/build_actions';
+import { selectChampions } from '../../reducers/selectors';
 
 const mapStateToProps = state => ({
-  champions: allChampions(state),
+  champions: selectChampions(state.champions),
 });
 
 const mapDispatchToProps = dispatch => ({
- fetchChampions: () => dispatch(fetchChampions())
+ fetchChampions: () => dispatch(fetchChampions()),
+ fetchChampionData: (championId) => dispatch(fetchChampionData(championId))
 });
 
 const ChampionSearchContainer = connect(mapStateToProps, mapDispatchToProps)
