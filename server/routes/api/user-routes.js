@@ -21,7 +21,7 @@ router.post("/update/:id", (req, res) => {
 });
 
 // delete user
-router.delete('/:id', (req, res) => {
+router.delete('/account/:id', (req, res) => {
     UserService.deleteUser(req, res);
 });
 

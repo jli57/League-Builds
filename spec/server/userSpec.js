@@ -92,11 +92,18 @@ describe("User", function () {
         done.fail('unimplemented');
     });
 
-    it("should delete", async (done) => {
-        // // delete
-        // res = await axios.delete(`/user/${user._id}`, config);
-        // expect(res.status).toBe(200);
-        done.fail('unimplemented');
+    it("should delete", async (done) => {       
+        try {
+            res = await axios.delete(`/user/account/${session}`, config);            
+            expect(res.status).toBe(200);
+
+            let existance = await axios.get(`/user/session/${session}`, config);
+            expect(existance.status).toBe(404);
+            
+            done();
+        } catch (ex) {
+            done.fail(ex.message);
+        }        
     });
 
 });
