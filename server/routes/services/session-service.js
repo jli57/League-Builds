@@ -4,9 +4,9 @@ const HttpError = require('../../errors/HttpError');
 const SessionService = function () {
     const getSession = async (id) => {
         try {
-            return await Session.findSessionById(id);
+            return await Session.findById(id);
         } catch (er) {
-            throw new HttpError('Session does not exist?', 501);
+            throw new HttpError(501, 'Session does not exist?');
         }
     };
 
@@ -15,11 +15,7 @@ const SessionService = function () {
     }
 
     const createSession = async (userId) => {
-        try {
-            return await Session.create(userId);
-        } catch (err) {
-            throw new HttpError(err.msg, 500)
-        }
+        return await Session.create(userId);        
     }
 
     return {

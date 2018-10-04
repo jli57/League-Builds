@@ -17,7 +17,7 @@ const UserService = function () {
         if (await getUserByUsername(application.username))
             errors.push({ param: 'username', msg: 'Username already in use' });
         if (errors.length > 0)
-            throw new HttpError(errors, 406);
+            throw new HttpError(406, errors);
         else
             return await User.createUser(new User({
                 username: application.username,

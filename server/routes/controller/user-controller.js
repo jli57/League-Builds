@@ -46,9 +46,9 @@ const UserController = function () {
             const user = await UserService.validatePassword(req.body.application.username, req.body.application.password);
                         
             if (!(await UserService.deleteUser(user._id))) 
-                throw new HttpError('User not found', 404);
+                throw new HttpError(404, 'User not found');
             if (!(await SessionService.deleteSession(req.params.id))) 
-                throw new HttpError('Not logged in', 401);
+                throw new HttpError(401, 'Not logged in');
 
             res.status(204).json({});
         } catch (ex) {
