@@ -44,7 +44,7 @@ const UserService = function () {
         if (user && isMatch) {
             return user;
         } else {
-            throw new HttpError('Invalid username/password combination', 401);
+            throw new HttpError(401, 'Invalid username/password combination');
         }
     }
 
@@ -90,12 +90,7 @@ const UserService = function () {
     }
 
     let getUserById = async (id) => {
-        const user = await User.findById(id);
-        if (user) {
-            return user;
-        } else {
-            throw new HttpError('User does not exist', 404);
-        }
+        return await User.findById(id);        
     }
 
     let deleteUser = async (user_id) => {

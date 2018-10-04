@@ -24,13 +24,18 @@ const UserController = function () {
     let retrieveUser = async (req, res) => {
         try {
             const session = await SessionService.getSession(req.params.id);
-            if (session) {
-                let user = await UserService.getUserById(session.userId);
-                let private = UserService.removePrivate(user)
-                res.status(200).json({ user: private });
-            } else {
+            if (!session) {
                 throw new HttpError(404, 'Session does not exist');
             }
+
+            let user = await UserService.getUserById(session.userId);
+            if (!user) {
+                throw new HttpError('User does not exist', 404);
+            }
+
+            let private = UserService.removePrivate(user)
+            res.status(200).json({ user: private });
+
         }
         catch (ex) {
             res.status(ex.statusCode || 500).json({ errors: ex.msg });
