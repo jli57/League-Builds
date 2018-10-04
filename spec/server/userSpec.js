@@ -1,7 +1,7 @@
 describe("User", function () {
     const axios = require('axios');
-    const config = {
-        baseURL: 'http://localhost:8000/'
+    const config = {        
+        baseURL: 'http://localhost:8000/user'
     };
     const user = {
         application: {
@@ -16,21 +16,20 @@ describe("User", function () {
     let session = null;
     it("should create a user", async (done) => {
         try {
-            res = await axios.post('/user/register', user, config);
+            res = await axios.post('/register', user, config);
             expect(res.status).toBe(201);
             expect(res.data.user).not.toEqual({});
 
             session = res.data.session;
-            done();
         } catch (ex) {
-            console.log(ex);
             done.fail(ex.message);
         }
+        done();
     });
 
     it("should retrieve user data", async (done) => {
         try {
-            res = await axios.get(`/user/session/${session}`, config);
+            res = await axios.get(`/session/${session}`, config);
 
             expect(res.status).toBe(200);
             expect(res.data._id).toBeUndefined();
@@ -38,10 +37,11 @@ describe("User", function () {
             expect(res.data.username).toBe(user.username);
             expect(res.data.email).toBe(user.email);
             expect(res.data.name).toBe(user.name);
-            done();
+
         } catch (ex) {
             done.fail(ex.message);
         }
+        done();
     });
 
     it("should logout", async (done) => {
@@ -95,15 +95,14 @@ describe("User", function () {
     it("should delete user", async (done) => {
         try {
             config.data = user;
-            res = await axios.delete(`/user/delete/${session}`, config);
+            res = await axios.delete(`/delete/${session}`, config);
             expect(res.status).toBe(204);
 
-            res = await axios.get(`/user/session/${session}`, config);
+            res = await axios.get(`/session/${session}`, config);
         } catch (ex) {
             expect(ex.response.status).toBe(404);
         }
-        
+
         done();
     });
-
 });
