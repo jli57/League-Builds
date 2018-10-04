@@ -3,17 +3,16 @@ const HttpError = require('../../errors/HttpError');
 
 const UserService = function () {
     async function getUserByUsername(username) {
-        return await User.getUserByProperty(username);
+        return await User.getUserByProperty({ username: username });
     }
 
     async function getUserByEmail(email) {
-        return await User.getUserByProperty(email);
+        return await User.getUserByProperty({ email: email });
     }
 
     async function registerUser(application) {
-        //try {
-        const email = await getUserByEmail({ email: application.email });
-        const username = await getUserByUsername({ username: application.username });
+        const email = await getUserByEmail(application.email);
+        const username = await getUserByUsername(application.username);
 
         let errors = [];
         if (email)
@@ -31,14 +30,10 @@ const UserService = function () {
                 name: application.name
             }));
         }
-        // } catch (ex) {
-        //     console.log(ex);
-        //     throw new HttpError(ex.msg, ex.statusCode);
-        // }
     }
 
-    let validatePassword = async (username, password) => {        
-        const user = await getUserByUsername({username: username});        
+    let validatePassword = async (username, password) => {
+        const user = await getUserByUsername(username);
         const isMatch = await User.comparePassword(password, user.password);
         
         if (user && isMatch) {
@@ -77,7 +72,7 @@ const UserService = function () {
                 user.save();
                 res.status(200).json({});
             })
-            .catch(err => {                
+            .catch(err => {
                 res.status(500).json({});
             });
     };
@@ -90,7 +85,7 @@ const UserService = function () {
     }
 
     let getUserById = async (id) => {
-        return await User.findById(id);        
+        return await User.findById(id);
     }
 
     let deleteUser = async (user_id) => {

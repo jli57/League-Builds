@@ -12,12 +12,7 @@ const UserController = function () {
 
             res.status(201).json({ session: session._id });
         } catch (ex) {
-            if (ex.statusCode)
-                res.status(ex.statusCode).json({ errors: ex.msg });
-            else {
-
-                res.status(500).json({ errors: ex.msg });
-            }
+            res.status(ex.statusCode || 500).json({ errors: ex.msg });
         }
     };
 
@@ -30,12 +25,11 @@ const UserController = function () {
 
             let user = await UserService.getUserById(session.userId);
             if (!user) {
-                throw new HttpError('User does not exist', 404);
+                throw new HttpError(404, 'User does not exist');
             }
 
             let private = UserService.removePrivate(user)
             res.status(200).json({ user: private });
-
         }
         catch (ex) {
             res.status(ex.statusCode || 500).json({ errors: ex.msg });
@@ -53,21 +47,20 @@ const UserController = function () {
     let deleteAccount = async (req, res) => {
         try {
             const user = await UserService.validatePassword(req.body.application.username, req.body.application.password);
+            
             let deletedUser = await UserService.deleteUser(user._id);
-            let deletedSession = await SessionService.deleteSession(req.params.id);
-
             if (!deletedUser) {
                 throw new HttpError('User not found', 404);
-            } else if (!deletedSession) {
-                throw new HttpError('Not logged in', 401);
-            } else {
-                res.status(204).json({});
             }
+
+            let deletedSession = await SessionService.deleteSession(req.params.id);
+            if (!deletedSession) {
+                throw new HttpError('Not logged in', 401);
+            }
+
+            res.status(204).json({});
         } catch (ex) {
-            if (ex.statusCode)
-                res.status(ex.statusCode).json({ errors: ex.msg });
-            else
-                res.status(500).json({ errors: ex.msg });
+            res.status(ex.statusCode || 500).json({ errors: ex.msg });
         }
     }
 
