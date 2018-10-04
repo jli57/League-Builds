@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../../models/user');
-const UserService = require('../services/user-service');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const UserController = require('../controller/user-controller');
@@ -17,17 +15,17 @@ router.get('/session/:id', (req, res) => {
 
 // update user
 router.post("/update/:id", (req, res) => {
-    updateUser(req, res);
+    res.status(501).json({error: 'unimplemented'});
 });
 
 // delete user
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {    
     UserController.deleteAccount(req, res);
 });
 
 // confirm password
 router.post("/validate/:id", (req, res) => {
-    UserService.validateUser(req, res);
+    res.status(501).json({error: 'unimplemented'});
 });
 
 router.post('/login', (req, res) => {
