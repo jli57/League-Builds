@@ -19,17 +19,14 @@ const UserController = function () {
     let retrieveUser = async (req, res) => {
         try {
             const session = await SessionService.getSession(req.params.id);
-            if (!session) {
+            if (!session) 
                 throw new HttpError(404, 'Session does not exist');
-            }
 
             let user = await UserService.getUserById(session.userId);
-            if (!user) {
+            if (!user) 
                 throw new HttpError(404, 'User does not exist');
-            }
 
-            let private = UserService.removePrivate(user)
-            res.status(200).json({ user: private });
+            res.status(200).json({ user: UserService.removePrivate(user) });
         }
         catch (ex) {
             res.status(ex.statusCode || 500).json({ errors: ex.msg });
@@ -47,16 +44,11 @@ const UserController = function () {
     let deleteAccount = async (req, res) => {
         try {
             const user = await UserService.validatePassword(req.body.application.username, req.body.application.password);
-            
-            let deletedUser = await UserService.deleteUser(user._id);
-            if (!deletedUser) {
+                        
+            if (!(await UserService.deleteUser(user._id))) 
                 throw new HttpError('User not found', 404);
-            }
-
-            let deletedSession = await SessionService.deleteSession(req.params.id);
-            if (!deletedSession) {
+            if (!(await SessionService.deleteSession(req.params.id))) 
                 throw new HttpError('Not logged in', 401);
-            }
 
             res.status(204).json({});
         } catch (ex) {

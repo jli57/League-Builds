@@ -11,36 +11,30 @@ const UserService = function () {
     }
 
     async function registerUser(application) {
-        const email = await getUserByEmail(application.email);
-        const username = await getUserByUsername(application.username);
-
         let errors = [];
-        if (email)
+        if (await getUserByEmail(application.email))
             errors.push({ param: 'email', msg: 'Email already in use' });
-        if (username)
+        if (await getUserByUsername(application.username))
             errors.push({ param: 'username', msg: 'Username already in use' });
-        if (errors.length > 0) {
+        if (errors.length > 0)
             throw new HttpError(errors, 406);
-        }
-        else {
+        else
             return await User.createUser(new User({
                 username: application.username,
                 password: application.password,
                 email: application.email,
                 name: application.name
             }));
-        }
     }
 
     let validatePassword = async (username, password) => {
         const user = await getUserByUsername(username);
         const isMatch = await User.comparePassword(password, user.password);
-        
-        if (user && isMatch) {
+
+        if (user && isMatch)
             return user;
-        } else {
+        else
             throw new HttpError(401, 'Invalid username/password combination');
-        }
     }
 
     function validateUser(req, res) {
