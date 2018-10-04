@@ -37,14 +37,15 @@ const UserService = function () {
         // }
     }
 
-    function validatePassword(username, password) {
-        getUserByUsername(username)
-            .then(user => User.comparePassword(password, user.password))
-            .then(isMatch => { return isMatch })
-            .catch(err => {
-                console.log(`validatePassword: ${err}`);
-                throw err;
-            });
+    let validatePassword = async (username, password) => {        
+        const user = await getUserByUsername({username: username});        
+        const isMatch = await User.comparePassword(password, user.password);
+        
+        if (user && isMatch) {
+            return user;
+        } else {
+            throw new HttpError('Invalid username/password combination', 401);
+        }
     }
 
     function validateUser(req, res) {
@@ -76,8 +77,7 @@ const UserService = function () {
                 user.save();
                 res.status(200).json({});
             })
-            .catch(err => {
-                console.log(`updateUser: ${err}`);
+            .catch(err => {                
                 res.status(500).json({});
             });
     };
@@ -98,18 +98,8 @@ const UserService = function () {
         }
     }
 
-    function deleteUser(req, res) {
-        User.deleteById(req.params.id)
-            .then(user => {
-                if (user)
-                    res.status(200).json({})
-                else
-                    res.status(400).json({ error: 'User not found' })
-            })
-            .catch(err => {
-                console.log(`deleteUser: ${err}`)
-                res.status(500).json({})
-            })
+    let deleteUser = async (user_id) => {
+        return await User.findByIdAndDelete(user_id);
     };
 
     function login(req, res) { };
@@ -125,6 +115,7 @@ const UserService = function () {
         deleteUser: deleteUser,
         updateUser: updateUser,
         removePrivate: removePrivate,
+        validatePassword: validatePassword
     }
 }();
 

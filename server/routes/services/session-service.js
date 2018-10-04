@@ -10,8 +10,8 @@ const SessionService = function () {
         }
     };
 
-    const deleteSession = async (id) => {
-        throw new URIError('Not implemented');
+    const deleteSession = async (session_id) => {
+        return await Session.findByIdAndDelete(session_id);
     }
 
     const createSession = async (userId) => {

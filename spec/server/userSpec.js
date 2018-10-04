@@ -25,13 +25,13 @@ describe("User", function () {
         } catch (ex) {
             console.log(ex);
             done.fail(ex.message);
-        } 
+        }
     });
 
     it("should retrieve user data", async (done) => {
         try {
             res = await axios.get(`/user/session/${session}`, config);
-            
+
             expect(res.status).toBe(200);
             expect(res.data._id).toBeUndefined();
             expect(res.data.password).toBeUndefined();
@@ -92,18 +92,18 @@ describe("User", function () {
         done.fail('unimplemented');
     });
 
-    it("should delete", async (done) => {       
+    it("should delete user", async (done) => {
         try {
-            res = await axios.delete(`/user/account/${session}`, config);            
-            expect(res.status).toBe(200);
+            config.data = user;
+            res = await axios.delete(`/user/delete/${session}`, config);
+            expect(res.status).toBe(204);
 
-            let existance = await axios.get(`/user/session/${session}`, config);
-            expect(existance.status).toBe(404);
-            
-            done();
+            res = await axios.get(`/user/session/${session}`, config);
         } catch (ex) {
-            done.fail(ex.message);
-        }        
+            expect(ex.response.status).toBe(404);
+        }
+        
+        done();
     });
 
 });

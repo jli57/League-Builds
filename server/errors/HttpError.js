@@ -1,10 +1,10 @@
-class HttpError extends URIError {
-    constructor(message, statusCode) {
-        super(message);
+class HttpError extends Error {
+    constructor(statusCode, ...params) {
+        super(...params);
         
         // Maintains proper stack trace for where our error was thrown (only available on V8)
-        if (URIError.captureStackTrace) {
-            URIError.captureStackTrace(this, CustomError);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, HttpError);
         }
 
         this.statusCode = statusCode;

@@ -40,26 +40,12 @@ module.exports.getUserById = (id) => {
     });
 }
 
-module.exports.getUserByProperty = (property) => {
-    return new Promise((resolve, reject) => {
-        User.findOne(property, (err, user) => {
-            if (err)
-                reject(err)
-            else
-                resolve(user);
-        });
-    });
+module.exports.getUserByProperty = async (property) => {    
+    return await User.findOne(property);
 };
 
-module.exports.comparePassword = (password, hash) => {
-    return new Promise((resolve, reject) => {
-        bcrypt.compare(password, hash, (err, isMatch) => {
-            if (err)
-                reject(err);
-            else
-                resolve(isMatch);
-        })
-    });
+module.exports.comparePassword = async (password, hash) => {        
+    return await  bcrypt.compare(password, hash);  
 }
 
 module.exports.deleteById = (id) => {

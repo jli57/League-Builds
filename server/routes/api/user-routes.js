@@ -21,8 +21,8 @@ router.post("/update/:id", (req, res) => {
 });
 
 // delete user
-router.delete('/account/:id', (req, res) => {
-    UserService.deleteUser(req, res);
+router.delete('/delete/:id', (req, res) => {
+    UserController.deleteAccount(req, res);
 });
 
 // confirm password
