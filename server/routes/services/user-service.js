@@ -2,15 +2,15 @@ const User = require('../../models/user');
 const HttpError = require('../../errors/HttpError');
 
 const UserService = function () {
-    async function getUserByUsername(username) {
+    let getUserByUsername = async (username) => {
         return await User.getUserByProperty({ username: username });
     }
 
-    async function getUserByEmail(email) {
+    let getUserByEmail = async (email) => {
         return await User.getUserByProperty({ email: email });
     }
 
-    async function registerUser(application) {
+    let registerUser = async (application) => {
         let errors = [];
         if (await getUserByEmail(application.email))
             errors.push({ param: 'email', msg: 'Email already in use' });
@@ -86,6 +86,14 @@ const UserService = function () {
         return await User.findByIdAndDelete(user_id);
     };
 
+    let addSession = async (user_id, session_id) => {
+        throw new HttpError(501, 'not implemented');
+    }
+
+    let removeSession = async (user_id, session_id) => {
+        throw new HttpError(501, 'not implemented');
+    }
+
     function login(req, res) { };
 
     function logout(req, res) { };
@@ -99,7 +107,9 @@ const UserService = function () {
         deleteUser: deleteUser,
         updateUser: updateUser,
         removePrivate: removePrivate,
-        validatePassword: validatePassword
+        validatePassword: validatePassword,
+        addSession: addSession,
+        removeSession: removeSession
     }
 }();
 
