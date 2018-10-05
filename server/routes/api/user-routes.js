@@ -22,8 +22,8 @@ router.delete('/delete/:id', (req, res) => {
 });
 
 // confirm password
-router.post("/validate/:id", (req, res) => {
-    res.status(501).json({error: 'unimplemented'});
+router.post("/validate", (req, res) => {
+    UserController.validate(req, res);
 });
 
 router.post('/login', (req, res) => {

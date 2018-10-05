@@ -70,12 +70,32 @@ const UserController = function () {
         }
     }
 
+    let update = async (req, res) => {
+        try {
+
+        } catch (ex) {
+            res.status(ex.statusCode || 500).json({ error: ex.msg });
+        }
+    };
+
+    let validate = async (req, res) => {
+        try {
+            const user = await UserService.validatePassword(req.body.application.username, req.body.application.password);
+            res.status(200).json({});
+        } catch (ex) {
+            res.status(ex.statusCode || 500).json({ error: ex.msg });
+        }
+    };
+
     return {
         register: register,
         login: login,
         logout: logout,
         retrieveUser: retrieveUser,
-        deleteAccount: deleteAccount
+        deleteAccount: deleteAccount,
+        update: update,
+        validate: validate,
+
     }
 }();
 
