@@ -62,15 +62,15 @@ const UserService = function () {
         if (form.newName)
             user.name = form.newName;
 
-        return await User.findOneAndUpdate({_id: user._id}, user, {new: true})
+        return await User.findOneAndUpdate({ _id: user._id }, user, { new: true })
     };
 
-    let removePrivate = (user) => {
-        delete user._id;
-        delete user.password;
-        delete sessions;
-
-        return user;
+    let removePrivate = (user) => {        
+        return {
+            username: user.username,
+            email: user.email,
+            name: user.name,
+        };
     }
 
     let getUserById = async (id) => {
