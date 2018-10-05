@@ -89,10 +89,10 @@ describe("User", function () {
             const newPassword = 'password2';
             const newName = 'Levi';
 
-            user.email = newEmail;            
-            user.name = newName;
-            user.newUsername = newUsername;
-            user.newPassword = newPassword;
+            user.application.newEmail = newEmail;            
+            user.application.newName = newName;
+            user.application.newUsername = newUsername;
+            user.application.newPassword = newPassword;
             res = await axios.post(`/update/${session}`, user, config);
             expect(res.status).toBe(200);
 
@@ -102,8 +102,8 @@ describe("User", function () {
             expect(res.data.email).toBe(newEmail);
             expect(res.data.name).toBe(newName);
 
-            user.password = newPassword;
-            user.username = newUsername;
+            user.application.password = newPassword;
+            user.application.username = newUsername;
             res = await axios.post(`/validate`, user, config);
             expect(res.status).toBe(200);
 
