@@ -13,7 +13,7 @@ router.get('/session/:id', (req, res) => {
 
 // update user
 router.post("/update/:id", (req, res) => {
-    res.status(501).json({error: 'unimplemented'});
+    UserController.update(req, res);
 });
 
 // delete user

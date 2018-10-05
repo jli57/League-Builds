@@ -98,9 +98,9 @@ describe("User", function () {
 
             res = await axios.get(`/session/${session}`, config);
             expect(res.status).toBe(200);
-            expect(res.data.username).toBe(newUsername);
-            expect(res.data.email).toBe(newEmail);
-            expect(res.data.name).toBe(newName);
+            expect(res.data.user.username).toBe(newUsername);
+            expect(res.data.user.email).toBe(newEmail);
+            expect(res.data.user.name).toBe(newName);
 
             user.application.password = newPassword;
             user.application.username = newUsername;

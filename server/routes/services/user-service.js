@@ -52,23 +52,17 @@ const UserService = function () {
             });
     }
 
-    function updateUser(req, res) {
-        validatePassword(req.username, req.password)
-            .then(isMatch => {
-                if (isMatch)
-                    getUserByUsername(req.username)
-                else
-                    res.status(400).json({ error: 'Incorrect password' });
-            })
-            .then(user => generatePassword(user))
-            .then(hash => {
-                user.password = hash;
-                user.save();
-                res.status(200).json({});
-            })
-            .catch(err => {
-                res.status(500).json({});
-            });
+    let updateUser = async (user, form) => {
+        if (form.newUsername)
+            user.username = form.newUsername;
+        if (form.newPassword)
+            user.password = await User.generatePassword(form.newPassword);
+        if (form.newEmail)
+            user.email = form.newEmail;
+        if (form.newName)
+            user.name = form.newName;
+
+        return await User.findOneAndUpdate({_id: user._id}, user, {new: true})
     };
 
     let removePrivate = (user) => {
@@ -89,12 +83,12 @@ const UserService = function () {
 
     let startSession = async (user_id, session_id) => {
         const user = await User.findById(user_id);
-        if(!user){
+        if (!user) {
             throw new HttpError(404, 'User does not exist');
         }
 
-        user.sessions.push({session_id: session_id});
-        return await User.save(user);        
+        user.sessions.push({ session_id: session_id });
+        return await User.save(user);
     }
 
     let endSession = async (user_id, session_id) => {
@@ -102,6 +96,16 @@ const UserService = function () {
 
         throw new HttpError(501, 'not implemented');
     }
+
+    let save = async (newUser) => {
+        console.log(newUser);
+        return await User.save(new User({
+            username: newUser.username,
+            password: newUser.password,
+            email: newUser.email,
+            name: newUser.name,
+        }));
+    };
 
     function login(req, res) { };
 
@@ -118,7 +122,8 @@ const UserService = function () {
         removePrivate: removePrivate,
         validatePassword: validatePassword,
         startSession: startSession,
-        endSession: endSession
+        endSession: endSession,
+        save: save
     }
 }();
 
