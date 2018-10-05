@@ -75,13 +75,20 @@ describe("User", function () {
             const newEmail = 'lljruffin@outlook.com';
             const newUsername = 'farcry';
             const newPassword = 'password2';
+            const newName = 'Levi';
 
             user.email = newEmail;
             user.username = newUsername;
-            user.newPassword = newPassword;
+            user.name = newName;
+            user.newPassword = newPassword;            
             res = await axios.post(`/update/${session}`, user, config);
-
             expect(res.status).toBe(200)
+
+            res = await axios.get(`/session/${session}`, config);
+            expect(res.status).toBe(200);
+            expect(res.data.username).toBe(newUsername);
+            expect(res.data.email).toBe(newEmail);
+            expect(res.data.name).toBe(newName);
         } catch (ex) {
             done.fail(ex.message);
         }
