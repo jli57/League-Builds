@@ -70,7 +70,7 @@ describe("User", function () {
         done();
     });
 
-    if ("should validate", async (done) => {
+    it ("should validate", async (done) => {
         try {
             res = await axios.post(`/validate`, user, config);
             expect(res.status).toBe(200);
