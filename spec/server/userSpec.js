@@ -89,9 +89,9 @@ describe("User", function () {
             const newPassword = 'password2';
             const newName = 'Levi';
 
-            user.email = newEmail;
-            user.username = newUsername;
+            user.email = newEmail;            
             user.name = newName;
+            user.newUsername = newUsername;
             user.newPassword = newPassword;
             res = await axios.post(`/update/${session}`, user, config);
             expect(res.status).toBe(200);
@@ -101,6 +101,12 @@ describe("User", function () {
             expect(res.data.username).toBe(newUsername);
             expect(res.data.email).toBe(newEmail);
             expect(res.data.name).toBe(newName);
+
+            user.password = newPassword;
+            user.username = newUsername;
+            res = await axios.post(`/validate`, user, config);
+            expect(res.status).toBe(200);
+
         } catch (ex) {
             done.fail(ex.message);
         }
