@@ -34,15 +34,20 @@ const UserController = function () {
     };
 
     let login = async (req, res) => {
-        res.status(501).json({ errors: 'not implemented' });
+        try {
+            const user = await UserService.validatePassword(req.body.application.username, req.body.application.password);
+            const session = await SessionService.createSession(user._id);
+
+            res.status(201).json({ session: session._id });
+        } catch (ex) {
+            res.status(ex.statusCode || 500).json({ error: ex.msg });
+        }
     }
 
     let logout = async (req, res) => {
         try {
-            const session = await SessionService.deleteSession(req.params.id);
-            if (!session) {
+            if (!(await SessionService.deleteSession(req.params.id)))
                 throw new HttpError(404, 'Session not found');
-            }
 
             res.status(200).json({});
         } catch (ex) {
@@ -59,7 +64,7 @@ const UserController = function () {
             if (!(await SessionService.deleteSession(req.params.id)))
                 throw new HttpError(401, 'Not logged in');
 
-            res.status(204).json({});
+            res.status(200).json({});
         } catch (ex) {
             res.status(ex.statusCode || 500).json({ errors: ex.msg });
         }

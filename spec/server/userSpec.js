@@ -57,19 +57,17 @@ describe("User", function () {
     });
 
     it("should login", async (done) => {
-        // try {
-        //     res = await axios.post('/user/login', user, config);
+        try {
+            res = await axios.post('/login', user, config);
 
-        //     expect(res.status).toBe(201)
-        //     expect(res.data.session).not.toBeUndefined();
-        //     session = res.data.session;
-        // } catch (ex) {
-        //     done.fail(ex.message);
-        // }
-        // finally {
-        //     done();
-        // }
-        done.fail('unimplemented');
+            expect(res.status).toBe(201)
+            expect(res.data.session).not.toBeUndefined();
+            session = res.data.session;
+        } catch (ex) {
+            done.fail(ex.message);
+        }
+        
+        done();
     });
 
     it("should update", async (done) => {
@@ -92,7 +90,7 @@ describe("User", function () {
         try {
             config.data = user;
             res = await axios.delete(`/delete/${session}`, config);
-            expect(res.status).toBe(204);
+            expect(res.status).toBe(200);
 
             res = await axios.get(`/session/${session}`, config);
         } catch (ex) {
