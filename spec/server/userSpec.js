@@ -48,10 +48,10 @@ describe("User", function () {
             res = await axios.delete(`/logout/${session}`, config);
             expect(res.status).toBe(200);
 
-            res = await axios.delete(`/logout/${session}`, config);            
-            
+            res = await axios.delete(`/logout/${session}`, config);
+
         } catch (ex) {
-            expect(ex.response.status).toBe(404);            
+            expect(ex.response.status).toBe(404);
         }
         done();
     });
@@ -66,24 +66,27 @@ describe("User", function () {
         } catch (ex) {
             done.fail(ex.message);
         }
-        
+
         done();
     });
 
     it("should update", async (done) => {
-        // try {
-        //     res = await axios.post('/user/login', user, config);
+        try {
+            const newEmail = 'lljruffin@outlook.com';
+            const newUsername = 'farcry';
+            const newPassword = 'password2';
 
-        //     expect(res.status).toBe(201)
-        //     expect(res.data.session).not.toBeUndefined();
-        //     session = res.data.session;
-        // } catch (ex) {
-        //     done.fail(ex.message);
-        // }
-        // finally {
-        //     done();
-        // }
-        done.fail('unimplemented');
+            user.email = newEmail;
+            user.username = newUsername;
+            user.newPassword = newPassword;
+            res = await axios.post(`/update/${session}`, user, config);
+
+            expect(res.status).toBe(200)
+        } catch (ex) {
+            done.fail(ex.message);
+        }
+        done();
+
     });
 
     it("should delete user", async (done) => {
