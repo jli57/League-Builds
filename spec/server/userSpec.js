@@ -70,6 +70,18 @@ describe("User", function () {
         done();
     });
 
+    if ("should validate", async (done) => {
+        try {
+            res = await axios.post(`/validate`, user, config);
+            expect(res.status).toBe(200);
+
+        } catch (ex) {
+            done.fail(ex.message);
+        }
+
+        done();
+    });
+
     it("should update", async (done) => {
         try {
             const newEmail = 'lljruffin@outlook.com';
@@ -80,9 +92,9 @@ describe("User", function () {
             user.email = newEmail;
             user.username = newUsername;
             user.name = newName;
-            user.newPassword = newPassword;            
+            user.newPassword = newPassword;
             res = await axios.post(`/update/${session}`, user, config);
-            expect(res.status).toBe(200)
+            expect(res.status).toBe(200);
 
             res = await axios.get(`/session/${session}`, config);
             expect(res.status).toBe(200);
