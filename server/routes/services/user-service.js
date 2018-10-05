@@ -74,6 +74,7 @@ const UserService = function () {
     let removePrivate = (user) => {
         delete user._id;
         delete user.password;
+        delete sessions;
 
         return user;
     }
@@ -86,11 +87,19 @@ const UserService = function () {
         return await User.findByIdAndDelete(user_id);
     };
 
-    let addSession = async (user_id, session_id) => {
-        throw new HttpError(501, 'not implemented');
+    let startSession = async (user_id, session_id) => {
+        const user = await User.findById(user_id);
+        if(!user){
+            throw new HttpError(404, 'User does not exist');
+        }
+
+        user.sessions.push({session_id: session_id});
+        return await User.save(user);        
     }
 
-    let removeSession = async (user_id, session_id) => {
+    let endSession = async (user_id, session_id) => {
+        const user = await User.findById(user_id);
+
         throw new HttpError(501, 'not implemented');
     }
 
@@ -108,8 +117,8 @@ const UserService = function () {
         updateUser: updateUser,
         removePrivate: removePrivate,
         validatePassword: validatePassword,
-        addSession: addSession,
-        removeSession: removeSession
+        startSession: startSession,
+        endSession: endSession
     }
 }();
 

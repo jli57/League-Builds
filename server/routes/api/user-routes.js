@@ -31,8 +31,8 @@ router.post('/login', (req, res) => {
 });
         
 
-router.get('/logout', (req, res) => {
-    UserController.login(req, res);
+router.delete('/logout/:id', (req, res) => {
+    UserController.logout(req, res);
 });
 
 module.exports = router;

@@ -45,13 +45,14 @@ describe("User", function () {
 
     it("should logout", async (done) => {
         try {
-            res = await axios.post('/user/logout', user, config);
+            res = await axios.delete(`/logout/${session}`, config);
+            expect(res.status).toBe(200);
 
-            expect(res.status).toBe(200)
-            expect(res.data.session).not.toBeUndefined();
+            res = await axios.delete(`/logout/${session}`, config);            
+            
         } catch (ex) {
-            done.fail(ex.message);
-        }        
+            expect(ex.response.status).toBe(404);            
+        }
         done();
     });
 
