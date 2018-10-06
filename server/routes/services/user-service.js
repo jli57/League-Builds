@@ -10,32 +10,18 @@ const UserService = function () {
         return await User.getUserByProperty({ email: email });
     }
 
-    let registerUser = async (application) => {
-        let errors = [];
-        if (await getUserByEmail(application.email))
-            errors.push({ param: 'email', msg: 'Email already in use' });
-        if (await getUserByUsername(application.username))
-            errors.push({ param: 'username', msg: 'Username already in use' });
-        if (errors.length > 0)
-            throw new HttpError(406, errors);
-        else
-            return await User.createUser(new User({
-                username: application.username,
-                password: application.password,
-                email: application.email,
-                name: application.name
-            }));
+    let registerUser = async (application) => {        
+        return await User.createUser(new User({
+            username: application.username,
+            password: application.password,
+            email: application.email,
+            name: application.name
+        }));
     }
 
-    let validatePassword = async (username, password) => {
-        const user = await getUserByUsername(username);
-        const isMatch = await User.comparePassword(password, user.password);
-
-        if (user && isMatch)
-            return user;
-        else
-            throw new HttpError(401, 'Invalid username/password combination');
-    }    
+    let validatePassword = async (user, password) => {
+        return await User.comparePassword(password, user.password);
+    }
 
     let updateUser = async (user, form) => {
         if (form.newUsername)
@@ -50,7 +36,7 @@ const UserService = function () {
         return await User.findOneAndUpdate({ _id: user._id }, user, { new: true })
     };
 
-    let removePrivate = (user) => {        
+    let removePrivate = (user) => {
         return {
             username: user.username,
             email: user.email,
@@ -64,7 +50,7 @@ const UserService = function () {
 
     let deleteUser = async (user_id) => {
         return await User.findByIdAndDelete(user_id);
-    };        
+    };
 
     return {
         getUserById: getUserById,

@@ -5,7 +5,13 @@ const HttpError = require('../../errors/HttpError');
 const UserController = function () {
     let register = async (req, res) => {
         try {
-            // validate username, email, password correctness
+            let errors = [];
+            if (await UserService.getUserByEmail(req.body.application.email))
+                errors.push({ param: 'email', msg: 'Email already in use' });
+            if (await UserService.getUserByUsername(req.body.application.username))
+                errors.push({ param: 'username', msg: 'Username already in use' });
+            if (errors.length > 0)
+                throw new HttpError(406, errors);
 
             const user = await UserService.registerUser(req.body.application);
             const session = await SessionService.createSession(user._id);
@@ -35,9 +41,8 @@ const UserController = function () {
 
     let login = async (req, res) => {
         try {
-            const user = await UserService.validatePassword(req.body.application.username, req.body.application.password);
+            const user = await validateUser(req);
             const session = await SessionService.createSession(user._id);
-
             res.status(201).json({ session: session._id });
         } catch (ex) {
             res.status(ex.statusCode || 500).json({ error: ex.msg });
@@ -57,12 +62,11 @@ const UserController = function () {
 
     let deleteAccount = async (req, res) => {
         try {
-            const user = await UserService.validatePassword(req.body.application.username, req.body.application.password);
-
-            if (!(await UserService.deleteUser(user._id)))
-                throw new HttpError(404, 'User not found');
+            const user = await validateUser(req);
             if (!(await SessionService.deleteSession(req.params.id)))
                 throw new HttpError(401, 'Not logged in');
+            if (!(await UserService.deleteUser(user._id)))
+                throw new HttpError(404, 'User not found');
 
             res.status(200).json({});
         } catch (ex) {
@@ -72,23 +76,29 @@ const UserController = function () {
 
     let update = async (req, res) => {
         try {
-            const form = req.body.application;
-            const user = await UserService.validatePassword(form.username, form.password);
-                        
-            res.status(200).json({});
+            const user = await validateUser(req);
+            const updatedUser = await UserService.updateUser(user, req.body.application);
+            
+            res.status(200).json({ user: UserService.removePrivate(updatedUser) });
         } catch (ex) {
-            console.log(ex.msg);
             res.status(ex.statusCode || 500).json({ error: ex.msg });
         }
     };
 
     let validate = async (req, res) => {
         try {
-            const user = await UserService.validatePassword(req.body.application.username, req.body.application.password);
+            await validateUser(req);
             res.status(200).json({});
         } catch (ex) {
             res.status(ex.statusCode || 500).json({ error: ex.msg });
         }
+    };
+
+    let validateUser = async (req) => {
+        const user = await UserService.getUserByUsername(req.body.application.username);
+        if (!(user && (await UserService.validatePassword(user, req.body.application.password))))
+            throw new HttpError(401, 'Invalid username/password combination');
+        return user;
     };
 
     return {
@@ -99,7 +109,6 @@ const UserController = function () {
         deleteAccount: deleteAccount,
         update: update,
         validate: validate,
-
     }
 }();
 
