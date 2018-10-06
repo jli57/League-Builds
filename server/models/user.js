@@ -15,12 +15,7 @@ const UserSchema = mongoose.Schema({
     name: {
         type: String
     },
-    sessions: [
-        {
-            session_id: String
-        }
-    ]
-
+    
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
@@ -35,17 +30,6 @@ module.exports.generatePassword = async (password) => {
     return await bcrypt.hash(password, salt);
 };
 
-module.exports.getUserById = (id) => {
-    return new Promise((resolve, reject) => {
-        User.findById(id, (err, user) => {
-            if (err)
-                reject(err);
-            else
-                resolve(user);
-        });
-    });
-}
-
 module.exports.getUserByProperty = async (property) => {
     return await User.findOne(property);
 };
@@ -53,15 +37,3 @@ module.exports.getUserByProperty = async (property) => {
 module.exports.comparePassword = async (password, hash) => {
     return await bcrypt.compare(password, hash);
 }
-
-module.exports.deleteById = (id) => {
-    return new Promise((resolve, reject) => {
-        User.findByIdAndDelete(id, (err, user) => {
-            if (err)
-                reject(err);
-            else
-                resolve(user);
-        })
-    });
-};
-

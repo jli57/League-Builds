@@ -74,10 +74,7 @@ const UserController = function () {
         try {
             const form = req.body.application;
             const user = await UserService.validatePassword(form.username, form.password);
-            
-            const s = await UserService.updateUser(user, form);            
-
-            const g = await UserService.getUserById(user._id);
+                        
             res.status(200).json({});
         } catch (ex) {
             console.log(ex.msg);
