@@ -1,5 +1,6 @@
 const UserService = require('../services/user-service');
 const SessionService = require('../services/session-service');
+const MessageService = require('../services/messages-service');
 const HttpError = require('../../errors/HttpError');
 
 const UserController = function () {
@@ -7,9 +8,9 @@ const UserController = function () {
         try {
             let errors = [];
             if (await UserService.getUserByEmail(req.body.form.email))
-                errors.push({ param: 'email', msg: 'Email already in use' });
+                errors.push({ param: 'email', msg: MessageService.EMAIL_406 });
             if (await UserService.getUserByUsername(req.body.form.username))
-                errors.push({ param: 'username', msg: 'Username already in use' });
+                errors.push({ param: 'username', msg: MessageService.USERNAME_406 });
             if (errors.length > 0)
                 throw new HttpError(406, errors);
 
@@ -26,11 +27,11 @@ const UserController = function () {
         try {
             const session = await SessionService.getSession(req.params.id);
             if (!session)
-                throw new HttpError(404, 'Session does not exist');
+                throw new HttpError(404, MessageService.SESSION_404);
 
             let user = await UserService.getUserById(session.userId);
             if (!user)
-                throw new HttpError(404, 'User does not exist');
+                throw new HttpError(404, MessageService.USER_404);
 
             res.status(200).json({ user: UserService.removePrivate(user) });
         }
@@ -52,7 +53,7 @@ const UserController = function () {
     let logout = async (req, res) => {
         try {
             if (!(await SessionService.deleteSession(req.params.id)))
-                throw new HttpError(404, 'Session not found');
+                throw new HttpError(404, MessageService.SESSION_404);
 
             res.status(200).json({});
         } catch (ex) {
@@ -64,9 +65,9 @@ const UserController = function () {
         try {
             const user = await validateUser(req);
             if (!(await SessionService.deleteSession(req.params.id)))
-                throw new HttpError(401, 'Not logged in');
+                throw new HttpError(404, MessageService.SESSION_404);
             if (!(await UserService.deleteUser(user._id)))
-                throw new HttpError(404, 'User not found');
+                throw new HttpError(404, MessageService.USER_404);
 
             res.status(200).json({});
         } catch (ex) {
@@ -97,7 +98,7 @@ const UserController = function () {
     let validateUser = async (req) => {
         const user = await UserService.getUserByUsername(req.body.form.username);
         if (!(user && (await UserService.validatePassword(user, req.body.form.password))))
-            throw new HttpError(401, 'Invalid username/password combination');
+            throw new HttpError(401, MessageService.LOGIN_401);
         return user;
     };
 
