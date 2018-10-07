@@ -1,5 +1,4 @@
 const Session = require('../../models/session');
-const HttpError = require('../../errors/HttpError');
 
 const SessionService = function () {
     const getSession = async (id) => {
