@@ -1,5 +1,4 @@
 const User = require('../../models/user');
-const HttpError = require('../../errors/HttpError');
 
 const UserService = function () {
     let getUserByUsername = async (username) => {
