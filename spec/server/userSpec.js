@@ -4,7 +4,7 @@ describe("User", function () {
         baseURL: 'http://localhost:8000/user'
     };
     const user = {
-        application: {
+        form: {
             username: 'test_username',
             password: 'password123',
             email: 'example@domain.test',
@@ -34,9 +34,9 @@ describe("User", function () {
             expect(res.status).toBe(200);
             expect(res.data.user._id).toBeUndefined();
             expect(res.data.user.password).toBeUndefined();
-            expect(res.data.user.username).toBe(user.application.username);
-            expect(res.data.user.email).toBe(user.application.email);
-            expect(res.data.user.name).toBe(user.application.name);
+            expect(res.data.user.username).toBe(user.form.username);
+            expect(res.data.user.email).toBe(user.form.email);
+            expect(res.data.user.name).toBe(user.form.name);
         } catch (ex) {
             done.fail(ex.message);
         }
@@ -89,10 +89,10 @@ describe("User", function () {
             const newPassword = 'password2';
             const newName = 'Levi';
 
-            user.application.newEmail = newEmail;            
-            user.application.newName = newName;
-            user.application.newUsername = newUsername;
-            user.application.newPassword = newPassword;
+            user.form.newEmail = newEmail;            
+            user.form.newName = newName;
+            user.form.newUsername = newUsername;
+            user.form.newPassword = newPassword;
             res = await axios.post(`/update/${session}`, user, config);
             expect(res.status).toBe(200);
 
@@ -102,8 +102,8 @@ describe("User", function () {
             expect(res.data.user.email).toBe(newEmail);
             expect(res.data.user.name).toBe(newName);
 
-            user.application.password = newPassword;
-            user.application.username = newUsername;
+            user.form.password = newPassword;
+            user.form.username = newUsername;
             res = await axios.post(`/validate`, user, config);
             expect(res.status).toBe(200);
 

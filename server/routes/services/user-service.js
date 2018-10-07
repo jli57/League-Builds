@@ -10,12 +10,12 @@ const UserService = function () {
         return await User.getUserByProperty({ email: email });
     }
 
-    let registerUser = async (application) => {        
+    let registerUser = async (form) => {        
         return await User.createUser(new User({
-            username: application.username,
-            password: application.password,
-            email: application.email,
-            name: application.name
+            username: form.username,
+            password: form.password,
+            email: form.email,
+            name: form.name
         }));
     }
 

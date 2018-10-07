@@ -6,14 +6,14 @@ const UserController = function () {
     let register = async (req, res) => {
         try {
             let errors = [];
-            if (await UserService.getUserByEmail(req.body.application.email))
+            if (await UserService.getUserByEmail(req.body.form.email))
                 errors.push({ param: 'email', msg: 'Email already in use' });
-            if (await UserService.getUserByUsername(req.body.application.username))
+            if (await UserService.getUserByUsername(req.body.form.username))
                 errors.push({ param: 'username', msg: 'Username already in use' });
             if (errors.length > 0)
                 throw new HttpError(406, errors);
 
-            const user = await UserService.registerUser(req.body.application);
+            const user = await UserService.registerUser(req.body.form);
             const session = await SessionService.createSession(user._id);
 
             res.status(201).json({ session: session._id });
@@ -77,7 +77,7 @@ const UserController = function () {
     let update = async (req, res) => {
         try {
             const user = await validateUser(req);
-            const updatedUser = await UserService.updateUser(user, req.body.application);
+            const updatedUser = await UserService.updateUser(user, req.body.form);
             
             res.status(200).json({ user: UserService.removePrivate(updatedUser) });
         } catch (ex) {
@@ -95,8 +95,8 @@ const UserController = function () {
     };
 
     let validateUser = async (req) => {
-        const user = await UserService.getUserByUsername(req.body.application.username);
-        if (!(user && (await UserService.validatePassword(user, req.body.application.password))))
+        const user = await UserService.getUserByUsername(req.body.form.username);
+        if (!(user && (await UserService.validatePassword(user, req.body.form.password))))
             throw new HttpError(401, 'Invalid username/password combination');
         return user;
     };
