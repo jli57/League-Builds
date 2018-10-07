@@ -8,9 +8,15 @@ const UserController = function () {
         try {
             let errors = [];
             if (await UserService.getUserByEmail(req.body.form.email))
-                errors.push({ param: 'email', msg: MessageService.EMAIL_406 });
+                errors.push({
+                    param: 'email',
+                    msg: MessageService.EMAIL_406
+                });
             if (await UserService.getUserByUsername(req.body.form.username))
-                errors.push({ param: 'username', msg: MessageService.USERNAME_406 });
+                errors.push({
+                    param: 'username',
+                    msg: MessageService.USERNAME_406
+                });
             if (errors.length > 0)
                 throw new HttpError(406, errors);
 
@@ -79,7 +85,7 @@ const UserController = function () {
         try {
             const user = await validateUser(req);
             const updatedUser = await UserService.updateUser(user, req.body.form);
-            
+
             res.status(200).json({ user: UserService.removePrivate(updatedUser) });
         } catch (ex) {
             res.status(ex.statusCode || 500).json({ error: ex.msg });
