@@ -2,10 +2,14 @@ var path = require("path");
 
 module.exports = {
   context: __dirname,
-  entry: "./frontend/index.jsx",
+  entry: "./src/server/server.js",
   output: {
     path: path.resolve(__dirname),
-    filename: "./bundle.js"
+    filename: "./dist/server.bundle.js"
+  },
+  node: {
+    fs: 'empty',
+    net: 'empty'
   },
   module: {
     rules: [
