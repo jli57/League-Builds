@@ -1,4 +1,6 @@
-var path = require("path");
+var fs = require('fs');
+var path = require('path');
+var ExternalsPlugin = require('webpack2-externals-plugin');
 
 module.exports = {
   context: __dirname,
@@ -7,15 +9,23 @@ module.exports = {
     path: path.resolve(__dirname),
     filename: "./dist/server.bundle.js"
   },
-  node: {
-    fs: 'empty',
-    net: 'empty'
-  },
+  target: "node",
+  // node: {
+  //   fs: 'empty',
+  //   net: 'empty'
+  // },
   module: {
     rules: [
       {
         test: [/\.jsx?$/, /\.js?$/],
         exclude: /(node_modules)/,
+        options:{
+          presets:[
+            "react",
+            "es2015",
+            "stage-0"
+          ]
+        },
         use: {
           loader: "babel-loader",
           query: {
@@ -28,6 +38,10 @@ module.exports = {
   },
   devtool: "source-map",
   resolve: {
-    extensions: [".js", ".jsx", "*"]
+    extensions: [".js", ".jsx", "*"],
+    modules: [
+      "client",
+      "node_modules"
+    ]
   },
 };
