@@ -11,7 +11,7 @@ module.exports = {
             'webpack-hot-middleware/client',
             'webpack/hot/only-dev-server',
             'react-hot-loader/patch',
-            './client/index.js',
+            '.\\src\\frontend\\index.jsx',
         ],
         vendor: [
             'react',
