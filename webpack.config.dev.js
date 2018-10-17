@@ -1,102 +1,89 @@
+const fs = require('fs');
+const path = require('path');
+const nodeExternals = require('webpack-node-externals');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const cssnext = require('postcss-cssnext');
 const postcssFocus = require('postcss-focus');
 const postcssReporter = require('postcss-reporter');
 
-module.exports = {
-    devtool: 'cheap-module-eval-source-map',
-    entry: {
-        app: [
-            'eventsource-polyfill',
-            'webpack-hot-middleware/client',
-            'webpack/hot/only-dev-server',
-            'react-hot-loader/patch',
-            '.\\src\\frontend\\index.jsx',
-        ],
-        vendor: [
-            'react',
-            'react-dom',
-        ],
-    },
-    output: {
-        path: __dirname,
-        filename: 'index.jsx',
-        publicPath: 'http://0.0.0.0:8000/'
-    },
-    resolve: {
-        extensions: ['.js', '.jsx'],
-        modules: ['client', 'node_modules'],
-    },
-    module: {
-        rules: [
-            {
-                test: /\.s?css$/,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'style-loader',
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            localIdentName: '[name]__[local]__[hash:base64:5]',
-                            modules: true,
-                            importLoaders: 1,
-                            sourceMap: true,
-                        },
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins: () => [
-                                postcssFocus(),
-                                cssnext({
-                                    browsers: ['last 2 versions', 'IE > 10'],
-                                }),
-                                postcssReporter({
-                                    clearMessages: true,
-                                }),
-                            ],
-                        },
-                    },
-                ],
-            },
-            {
-                test: /\.css$/,
-                include: /node_modules/,
-                use: ['style-loader', 'css-loader'],
-            },
-            {
-                test: /\.jsx*$/,
-                exclude: [/node_modules/, /.+\.config.js/],
-                use: 'babel-loader',
-            },
-            {
-                test: /\.(jpe?g|gif|png|svg)$/i,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10000,
-                        },
-                    },
-                ],
-            },
-        ],
-    },
-
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            minChunks: Infinity,
-            filename: 'vendor.js',
-        }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                CLIENT: JSON.stringify(true),
-                'NODE_ENV': JSON.stringify('development'),
-            }
-        }),
-    ],
+const clientConfig = {
+	target: 'web', // can be ommitted since web is default, but keeping as reference
+	mode: 'development',
+	output: {
+		path: path.resolve(__dirname, './dist/client'),
+		filename: 'client.bundle.js',		
+	},
+	devtool: 'inline-source-map',
+	devServer: {
+		contentBase: path.resolve(__dirname, './dist/client'),
+		port: 3000,
+	},
+	entry: {
+		app: './src/frontend/index.js',
+	},
+	resolve: {
+		extensions: ['.js', '.jsx'],
+		modules: [
+			'./src/frontend',
+			'node_modules',
+		],
+	},
+	module: {
+		rules: [
+			{
+				test: /\.jsx?$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: [
+							'@babel/react',
+							'@babel/env'
+						],
+						plugins: ['@babel/plugin-proposal-class-properties']
+					}
+				}
+			},
+			{
+				test: /\.html$/,
+				use: [
+					{
+						loader: "html-loader"
+					}
+				]
+			}
+		]
+	},
+	
+	plugins: [
+		new HtmlWebpackPlugin({
+				title: 'test',
+				template: './dist/index.html',
+			}),		
+		new CleanWebpackPlugin(['dist']),
+	]
 };
+
+
+const serverConfig = {
+	target: 'node',
+	mode: 'development',
+	output: {
+		path: path.resolve(__dirname, 'dist/server'),
+		filename: 'server.bundle.js',
+		publicPath: './server'
+	},
+	externals: [nodeExternals()],
+	devtool: 'inline-source-map',
+	devServer: {
+		contentBase: path.resolve(__dirname, 'dist/server'),
+		port: 8000
+	},
+	entry: {
+		app: './src/server/server.js'
+	},
+};
+
+module.exports = [clientConfig]//, serverConfig];
