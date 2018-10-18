@@ -5,8 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "SET NODE_ENV=development && nodemon index.js",
-		"webpack:server": "webpack --config webpack.config.server.js --watch --mode=development --display-error-details",
+		"start": "SET NODE_ENV=development && nodemon src/server/server.js",
+		"build": "webpack --config webpack.config.dev.js --mode=development --display-error-details",
 		"client": "webpack-dev-server --open --hot --inline --config webpack.config.dev.js"
 	},
 	"keywords": [],

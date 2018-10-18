@@ -8,16 +8,19 @@ const cssnext = require('postcss-cssnext');
 const postcssFocus = require('postcss-focus');
 const postcssReporter = require('postcss-reporter');
 
+
+
+
 const clientConfig = {
 	target: 'web', // can be ommitted since web is default, but keeping as reference
 	mode: 'development',
 	output: {
-		path: path.resolve(__dirname, './dist/client'),
+		path: path.resolve(__dirname, 'dist'),
 		filename: 'client.bundle.js',		
 	},
 	devtool: 'inline-source-map',
 	devServer: {
-		contentBase: path.resolve(__dirname, './dist/client'),
+		contentBase: path.resolve(__dirname, 'dist'),
 		port: 3000,
 	},
 	entry: {
@@ -58,11 +61,13 @@ const clientConfig = {
 	},
 	
 	plugins: [
+		new CleanWebpackPlugin(['dist'], {
+			exclude: ['index.html']
+		}),
 		new HtmlWebpackPlugin({
 				title: 'test',
 				template: './dist/index.html',
-			}),		
-		new CleanWebpackPlugin(['dist']),
+			}),				
 	]
 };
 
@@ -71,14 +76,13 @@ const serverConfig = {
 	target: 'node',
 	mode: 'development',
 	output: {
-		path: path.resolve(__dirname, 'dist/server'),
+		path: path.resolve(__dirname, 'dist'),
 		filename: 'server.bundle.js',
-		publicPath: './server'
 	},
 	externals: [nodeExternals()],
 	devtool: 'inline-source-map',
 	devServer: {
-		contentBase: path.resolve(__dirname, 'dist/server'),
+		contentBase: path.resolve(__dirname, 'dist'),
 		port: 8000
 	},
 	entry: {
