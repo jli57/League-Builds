@@ -71,6 +71,11 @@ app.use(expressValidator({
     }
 }));
 
+// render the main page
+app.get('/', (req, res) => {
+	res.sendFile('dist/index.html', {root: __dirname});
+});
+
 // routes 
 app.use('/user', userRoutes);
 
