@@ -10,19 +10,14 @@ const postcssReporter = require('postcss-reporter');
 
 
 
-
 const clientConfig = {
 	target: 'web', // can be ommitted since web is default, but keeping as reference
 	mode: 'development',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'client.bundle.js',		
+		filename: 'client.bundle.js',
 	},
 	devtool: 'inline-source-map',
-	devServer: {
-		contentBase: path.resolve(__dirname, 'dist'),
-		port: 3000,
-	},
 	entry: {
 		app: './src/frontend/index.js',
 	},
@@ -59,15 +54,15 @@ const clientConfig = {
 			}
 		]
 	},
-	
+
 	plugins: [
 		new CleanWebpackPlugin(['dist'], {
 			exclude: ['index.html']
 		}),
 		new HtmlWebpackPlugin({
-				title: 'test',
-				template: './dist/index.html',
-			}),				
+			title: 'test',
+			template: './dist/index.html',
+		}),
 	]
 };
 
@@ -78,16 +73,13 @@ const serverConfig = {
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'server.bundle.js',
+		publicPath: '/'
 	},
 	externals: [nodeExternals()],
 	devtool: 'inline-source-map',
-	devServer: {
-		contentBase: path.resolve(__dirname, 'dist'),
-		port: 8000
-	},
 	entry: {
 		app: './src/server/server.js'
 	},
 };
 
-module.exports = [clientConfig]//, serverConfig];
+module.exports = [clientConfig, serverConfig];
