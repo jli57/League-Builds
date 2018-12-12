@@ -17,13 +17,30 @@ class Champion extends React.Component {
     }
   }
 
+  handleChange(e) {
+    e.preventDefault();
+    const level = parseInt(e.target.value);
+    this.setState({level});
+  }
+
   render() {
+    const levels = [];
+    for ( let i = 1; i < 19; i++ ) {
+      levels.push(i);
+    }
+
     return (
       <section id="champion-data" className="hidden">
           <h1>{ this.props.champion.name }</h1>
           <div id="champion-level" >
             <button onClick={this.handleClick.bind(this, -1)}><i className="fas fa-caret-left"></i></button>
-            { this.state.level }
+            <select onChange={ this.handleChange.bind(this) }>
+              {
+                levels.map( (e) => (
+                  <option value={e} selected={ this.state.level === e ? true : false }>{e}</option>
+                ))
+              }
+            </select>
             <button onClick={this.handleClick.bind(this, 1)}><i className="fas fa-caret-right"></i></button>
           </div>
 
