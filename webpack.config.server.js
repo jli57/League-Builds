@@ -14,6 +14,6 @@ module.exports = {
 	externals: [nodeExternals()],
 	devtool: 'inline-source-map',
 	entry: {
-		app: './src/server/server.js'
+		app: './server.js'
 	},
 };

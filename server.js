@@ -17,7 +17,7 @@ mongoose.connect(db, { useNewUrlParser: true })
     .then(() => console.log('MongoDb connected...'))
     .catch(err => console.log(err));
 
-const userRoutes = require('./src/server/routes/api/user-routes');
+const userRoutes = require('./routes/api/user-routes');
 
 // declare express
 const app = express();

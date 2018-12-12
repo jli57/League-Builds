@@ -15,16 +15,16 @@ const clientConfig = {
 	mode: 'development',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'client.bundle.js',
+		filename: 'client.bundle.jsx',
 	},
 	devtool: 'inline-source-map',
 	entry: {
-		app: './src/frontend/index.js',
+		app: './frontend/src/index.jsx',
 	},
 	resolve: {
 		extensions: ['.js', '.jsx'],
 		modules: [
-			'./src/frontend',
+			'./frontend',
 			'node_modules',
 		],
 	},
@@ -78,7 +78,7 @@ const serverConfig = {
 	externals: [nodeExternals()],
 	devtool: 'inline-source-map',
 	entry: {
-		app: './src/server/server.js'
+		app: './server.js'
 	},
 };
 
