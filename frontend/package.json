@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack --watch --mode=development"
+    "webpack": "webpack --watch --mode=development",
+    "build-css": "node-sass --include-path scss src/styles/sass/main.scss  src/styles/css/main.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\"",
+    "start": "npm run webpack \"npm run watch-css\""
   },
   "keywords": [],
   "author": "",
@@ -17,6 +20,8 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
     "lodash": "^4.17.11",
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.18.8",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
