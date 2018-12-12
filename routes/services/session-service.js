@@ -1,4 +1,4 @@
-const Session = require('../../models/session');
+const Session = require('../../../../models/session');
 
 const SessionService = function () {
     const getSession = async (id) => {

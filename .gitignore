@@ -3,8 +3,4 @@ bundle.js
 bundle.js.map
 frontend/api_key.js
 server/config/**
-<<<<<<< HEAD
 .vscode
-=======
-.vscode
->>>>>>> folder-reorg

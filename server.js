@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const db = require('./config/keys').mongoURI;
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackConfig = require('../../webpack.config.dev.js');
+const webpackConfig = require('./webpack.config.dev.js');
 const webpackCompiler = webpack(webpackConfig);
 
 // connect to mongo using mongoose
@@ -17,7 +17,7 @@ mongoose.connect(db, { useNewUrlParser: true })
     .then(() => console.log('MongoDb connected...'))
     .catch(err => console.log(err));
 
-const userRoutes = require('./routes/api/user-routes');
+const userRoutes = require('./src/server/routes/api/user-routes');
 
 // declare express
 const app = express();
