@@ -2,9 +2,9 @@ var path = require("path");
 
 module.exports = {
   context: __dirname,
-  entry: "./frontend/index.jsx",
+  entry: "./src/index.jsx",
   output: {
-    path: path.resolve(__dirname),
+    path: path.resolve(__dirname, 'src'),
     filename: "./bundle.js"
   },
   module: {
