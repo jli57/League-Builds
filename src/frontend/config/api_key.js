@@ -1,1 +1,0 @@
-const api_key = 'RGAPI-c003551e-53df-465e-8c77-c42a964af455';

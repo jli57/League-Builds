@@ -1,4 +1,4 @@
-import API_KEY from '../config/api_key';
+import API_KEY from './api_key';
 
 export const CHAMPION_DATA = "http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/champion.json";
 
