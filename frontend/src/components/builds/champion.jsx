@@ -34,10 +34,10 @@ class Champion extends React.Component {
           <h1>{ this.props.champion.name }</h1>
           <div id="champion-level" >
             <button onClick={this.handleClick.bind(this, -1)}><i className="fas fa-caret-left"></i></button>
-            <select onChange={ this.handleChange.bind(this) }>
+            <select onChange={ this.handleChange.bind(this) } value={ this.state.level }>
               {
                 levels.map( (e) => (
-                  <option value={e} selected={ this.state.level === e ? true : false }>{e}</option>
+                  <option key={e} value={e} >{e}</option>
                 ))
               }
             </select>
