@@ -1,3 +1,3 @@
-module.exports = {
-    mongoURI:'mongodb://lawrence1:password2@ds045107.mlab.com:45107/auth-tutorial',
+module.exports = {    
+    mongoURI:'mongodb://lljruffin:password1@ds050077.mlab.com:50077/league_builds',
 }

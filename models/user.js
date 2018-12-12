@@ -14,32 +14,26 @@ const UserSchema = mongoose.Schema({
     },
     name: {
         type: String
-    }
+    },
+    
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
-module.exports.createUser = (newUser, callback) => {
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-            newUser.password = hash;
-            newUser.save(callback);
-        })
-    })
+module.exports.createUser = async (newUser) => {
+    newUser.password = await User.generatePassword(newUser.password);
+    return await newUser.save();
 };
 
-module.exports.getUserByUsername = (username, callback) => {
-    User.findOne({ username: username }, callback);
+module.exports.generatePassword = async (password) => {
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(password, salt);
 };
 
-module.exports.getUserById = (id, callback) => {
-    User.findById(id, callback);
-}
+module.exports.getUserByProperty = async (property) => {
+    return await User.findOne(property);
+};
 
-module.exports.comparePassword = (password, hash, callback) => {
-    bcrypt.compare(password, hash, (err, isMatch) => {
-        if (err)
-            throw err;
-        callback(null, isMatch);
-    })
+module.exports.comparePassword = async (password, hash) => {
+    return await bcrypt.compare(password, hash);
 }
