@@ -48,17 +48,14 @@ table {
   width: 300px;
 }
 
-.search-section {
-  width: 50%;
-}
-
 .hidden {
   display: none;
 }
 
-#app {
-  display: flex;
+.search-section {
+  width: 50%;
 }
-.flexbox {
+
+#body {
   display: flex;
 }
