@@ -24,9 +24,9 @@ class ChampionsSearch extends React.Component {
   render() {
     const searchResult = filterChampions( this.props.champions, this.state.searchTerm);
     return (
-      <section className="search-section">
+      <section className="search">
         <h1>All Champions</h1>
-        <input type="text" onChange={ this.setSearchTerm } value={ this.state.searchTerm }/>
+        <input type="text" onChange={ this.setSearchTerm } value={ this.state.searchTerm } placeholder="search..."/>
         <p>Result(s): { searchResult.length }</p>
         <ChampionsIndex champions={ searchResult } fetchChampionData={this.props.fetchChampionData} />
       </section>
