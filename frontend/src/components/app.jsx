@@ -9,7 +9,7 @@ const App = () => {
     <div id="app">
       <Header />
       <section id="body">
-        <Route exact path="/" component={ ChampionSearchContainer} />
+        <Route exact path="/champions" component={ ChampionSearchContainer} />
         <Route exact path="/" component={ BuildContainer } />
       </section>
     </div>
