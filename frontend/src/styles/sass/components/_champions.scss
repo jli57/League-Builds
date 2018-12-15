@@ -1,0 +1,27 @@
+.champion-img-icon {
+  width: 100%;
+}
+
+.champion-icon {
+  border: 1px solid #444444;
+  padding: 8px;
+  background-color: black;
+  color: white;
+  width: 100px;
+}
+
+.champion-icon:hover {
+  background-color: #51b2e8;
+  color: black;
+}
+
+.champion-list {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.champion-name {
+  word-wrap: break-word;
+  font-size: 14px;
+}
