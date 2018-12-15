@@ -1,0 +1,22 @@
+.build {
+  margin: auto;
+}
+
+.champion-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  > div {
+    margin: 10px 0;
+  }
+
+  & div:last-child {
+    display: flex;
+  }
+}
+
+.champion-level {
+  font-size: 16px;
+}
