@@ -48,6 +48,17 @@ a, a:visited, a:hover {
 *:hover {
   cursor: pointer; }
 
+body {
+  background: gray; }
+
+header nav {
+  margin: 5px 0; }
+  header nav ul {
+    display: flex;
+    justify-content: center; }
+    header nav ul li {
+      margin: 5px; }
+
 .champion-img-icon {
   width: 100%; }
 
