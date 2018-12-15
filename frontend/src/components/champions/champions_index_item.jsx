@@ -13,13 +13,11 @@ const ChampionsIndexItem = ({champion, fetchChampionData}) => {
   }
 
   return (
-    <li onClick={ handleClick } >
-      <div className="champion-icon">
-        <img className="champion-img-icon"
-          src={ fetchChampionIcon(champion.id) }
-          alt={ champion.name }/>
-        <p>{ champion.name }</p>
-      </div>
+    <li onClick={ handleClick } className="champion-icon">
+      <img className="champion-img-icon"
+        src={ fetchChampionIcon(champion.id) }
+        alt={ champion.name }/>
+      <p className="champion-name">{ champion.name }</p>
     </li>
   )
 }
