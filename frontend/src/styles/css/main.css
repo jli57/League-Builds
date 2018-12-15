@@ -41,6 +41,36 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+a, a:visited, a:hover {
+  text-decoration: none;
+  color: inherit; }
+
+*:hover {
+  cursor: pointer; }
+
+.champion-img-icon {
+  width: 100%; }
+
+.champion-icon {
+  border: 1px solid #444444;
+  padding: 8px;
+  background-color: black;
+  color: white;
+  width: 100px; }
+
+.champion-icon:hover {
+  background-color: #51b2e8;
+  color: black; }
+
+.champion-list {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center; }
+
+.champion-name {
+  word-wrap: break-word;
+  font-size: 14px; }
+
 body {
   font-family: sans-serif; }
 
@@ -49,26 +79,6 @@ h1 {
 
 .hidden {
   display: hidden; }
-
-.champion-img-icon {
-  width: 100px;
-  height: 100px; }
-
-.champion-icon {
-  border: 1px solid #444444;
-  padding: 5px;
-  background-color: black;
-  color: white; }
-
-.champion-icon:hover {
-  background-color: #51b2e8;
-  color: black; }
-
-.champion-list {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  text-align: center; }
 
 table tr, td {
   border: 1px solid black;
