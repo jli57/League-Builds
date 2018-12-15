@@ -1,6 +1,6 @@
 import React from 'react';
 import ChampionsIndex from './champions_index';
-import { filterChampions } from '../../reducers/selectors'
+import { filterChampions } from '../../reducers/selectors';
 
 class ChampionsSearch extends React.Component {
   constructor(props) {

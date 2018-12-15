@@ -10,7 +10,7 @@ const App = () => {
       <Header />
       <section id="body">
         <Route exact path="/champions" component={ ChampionSearchContainer} />
-        <Route exact path="/" component={ BuildContainer } />
+        <Route exact path="/build" component={ BuildContainer } />
       </section>
     </div>
   );

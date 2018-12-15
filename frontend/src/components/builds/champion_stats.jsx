@@ -20,6 +20,7 @@ class ChampionStats extends React.Component {
       <table className="stats-table">
         <tbody>
           { Object.keys(this.props.stats).map( key => (
+              key.indexOf("perlevel") >= 0 ? null :
               <tr key={key}>
                 <td>{key}</td>
                 <td>{this.calculateStat(key)}</td>

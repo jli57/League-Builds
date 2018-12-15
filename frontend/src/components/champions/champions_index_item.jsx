@@ -1,23 +1,19 @@
 import React from 'react';
-import { fetchChampionIcon } from '../../utils/api_util';
-
+import ChampionIcon from './champion_icon';
+import { Link } from 'react-router-dom';
 
 const ChampionsIndexItem = ({champion, fetchChampionData}) => {
 
   const handleClick = () => {
-    return fetchChampionData(champion.id).then(
-      () => {
-        $("#champion-data").removeClass("hidden");
-      }
-    );
+    return fetchChampionData(champion.id);
   }
 
   return (
     <li onClick={ handleClick } className="champion-icon">
-      <img className="champion-img-icon"
-        src={ fetchChampionIcon(champion.id) }
-        alt={ champion.name }/>
-      <p className="champion-name">{ champion.name }</p>
+      <Link to="/build">
+        <ChampionIcon champion={champion}/>
+        <p className="champion-name">{ champion.name }</p>
+      </Link>
     </li>
   )
 }
