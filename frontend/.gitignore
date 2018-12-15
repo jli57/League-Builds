@@ -4,4 +4,4 @@ bundle.js.map
 api_key.js
 server/config/**
 
-src/styles/css/main.css
+main.css
