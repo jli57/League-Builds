@@ -18,6 +18,7 @@ mongoose.connect(db, { useNewUrlParser: true })
     .catch(err => console.log(err));
 
 const userRoutes = require('./routes/api/user-routes');
+const championRoutes = require('./routes/api/champion-routes');
 
 // declare express
 const app = express();
@@ -78,6 +79,7 @@ app.get('/', (req, res) => {
 
 // routes 
 app.use('/user', userRoutes);
+app.use('/ddragon/champions', championRoutes);
 
 // set up port
 app.set('port', (process.env.PORT || 8000));
