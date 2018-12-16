@@ -3,8 +3,7 @@ const HttpError = require('../../errors/HttpError');
 const axios = require('axios');
 
 const ChampionController = function () {
-	let exists = (obj, res) => {
-		console.log(obj);
+	let exists = (obj, res) => {		
 		if (obj)
 			res.status(200).json(obj);
 		else
@@ -46,8 +45,7 @@ const ChampionController = function () {
 	};
 
 	let getChampionById = async (req, res) => {
-		try {
-			console.log('in')
+		try {			
 			return exists(await championIdAPI(req, res), res);
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
@@ -68,7 +66,6 @@ const ChampionController = function () {
 
 	let getChampionImageById = async (req, res) => {
 		try {
-
 			res.status(200).json({ src: getChampionImage(await championIdAPI(req, res)) });
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
