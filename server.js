@@ -20,6 +20,7 @@ mongoose.connect(db, { useNewUrlParser: true })
 const userRoutes = require('./routes/api/user-routes');
 const championRoutes = require('./routes/api/champion-routes');
 const itemRoutes = require('./routes/api/item-routes');
+const runesReforgedRoutes = require('./routes/api/runes-reforged-routes');
 
 // declare express
 const app = express();
@@ -82,6 +83,7 @@ app.get('/', (req, res) => {
 app.use('/user', userRoutes);
 app.use('/ddragon/champions', championRoutes);
 app.use('/ddragon/items', itemRoutes);
+app.use('/ddragon/runesreforged', runesReforgedRoutes);
 
 // set up port
 app.set('port', (process.env.PORT || 8000));
