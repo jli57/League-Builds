@@ -1,4 +1,4 @@
-const { baseURL, championImage, championPath, itemPath, itemImagePath, championImagePath, runesReforgedImagePath, runesReforgedPath} = require('../../config/ddragon');
+const { baseURL, championImage, championPath, itemPath, itemImagePath, championImagePath, runesReforgedImagePath, runesReforgedPath} = require('../../../../config/ddragon');
 
 const CHAMPION_DATA = 'CHAMPION_DATA';
 const CHAMPION_IMAGE = 'CHAMPION_IMAGE';

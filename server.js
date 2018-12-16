@@ -17,10 +17,10 @@ mongoose.connect(db, { useNewUrlParser: true })
     .then(() => console.log('MongoDb connected...'))
     .catch(err => console.log(err));
 
-const userRoutes = require('./routes/api/user-routes');
-const championRoutes = require('./routes/api/champion-routes');
-const itemRoutes = require('./routes/api/item-routes');
-const runesReforgedRoutes = require('./routes/api/runes-reforged-routes');
+const userRoutes = require('./backend/src/routes/api/user-routes');
+const championRoutes = require('./backend/src/routes/api/champion-routes');
+const itemRoutes = require('./backend/src/routes/api/item-routes');
+const runesReforgedRoutes = require('./backend/src/routes/api/runes-reforged-routes');
 
 // declare express
 const app = express();
