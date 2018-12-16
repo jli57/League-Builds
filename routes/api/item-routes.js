@@ -1,16 +1,13 @@
 const express = require('express');
 const router = express.Router();
-
-// ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/item.json
+const ItemController = require('../controller/item-controller');
 
 router.get('/:id', (req, res) => {
-	throw new Error('unimplemented');
+	ItemController.getItemById(req, res);
 })
 
-router.get('/:id/stats', (req, res) => {
-	throw new Error('unimplemented');
+router.get('/:id/image', (req, res) => {
+	ItemController.getItemImageById(req, res);
 });
 
-router.get('/:id/image', (req, res) => {
-	throw new Error('unimplemented');
-});
+module.exports = router;
