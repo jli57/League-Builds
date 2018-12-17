@@ -4,3 +4,6 @@ bundle.js.map
 frontend/api_key.js
 server/config/**
 .vscode
+
+api_key.js
+main.css
