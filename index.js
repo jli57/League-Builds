@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === 'production') {
     });
     require('babel-polyfill');
   
-    require('./src/server/server');
+	 require('./backend/src/server');
+	 require('./frontend/src/index.jsx');
   }
   
