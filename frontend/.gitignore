@@ -1,7 +1,0 @@
-node_modules/
-bundle.js
-bundle.js.map
-api_key.js
-server/config/**
-
-main.css

@@ -5,7 +5,7 @@
 	"main": "",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "SET NODE_ENV=development && nodemon ./src/server.js",
+		"start": "nodemon ./src/server.js",
 		"build": "webpack --config webpack.config.dev.js --mode=development --display-error-details",
 		"client": "webpack-dev-server --open --hot --inline --config webpack.config.dev.js"
 	},
