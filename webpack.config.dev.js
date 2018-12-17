@@ -56,14 +56,14 @@ const clientConfig = {
 	},
 
 	plugins: [
-		new CleanWebpackPlugin(['dist'], {
-			exclude: ['index.html']
-		}),
+		// new CleanWebpackPlugin(['dist'], {
+		// 	exclude: ['index.html']
+		// }),
 		new HtmlWebpackPlugin({
 			title: 'test',
 			template: './dist/index.html',
 		}),
-	]
+	],	
 };
 
 
@@ -78,7 +78,7 @@ const serverConfig = {
 	externals: [nodeExternals()],
 	devtool: 'inline-source-map',
 	entry: {
-		app: './server.js'
+		app: './backend/src/server.js'
 	},
 };
 
