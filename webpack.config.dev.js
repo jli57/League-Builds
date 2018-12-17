@@ -48,7 +48,16 @@ const clientConfig = {
 				test: /\.html$/,
 				use: [
 					{
-						loader: "html-loader"
+						loader: "html-loader"						
+					}
+				]
+			},
+			{
+				test: /\.scss$/,
+				use: [
+					{
+						loader: "style-loader", // creates style nodes from js strings
+						loader: "sass-loader", // compiles Sass to CSS
 					}
 				]
 			}
@@ -63,11 +72,11 @@ const clientConfig = {
 			title: 'test',
 			template: './dist/index.html',
 		}),
-  ],
+	],
 
-  devServer: {
-    port: 3000,
-  }
+	devServer: {
+		port: 3000,
+	}
 };
 
 
