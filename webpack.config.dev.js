@@ -63,7 +63,11 @@ const clientConfig = {
 			title: 'test',
 			template: './dist/index.html',
 		}),
-	],	
+  ],
+
+  devServer: {
+    port: 3000,
+  }
 };
 
 

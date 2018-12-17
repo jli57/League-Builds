@@ -1,6 +1,6 @@
 import API_KEY from './api_key';
 
-export const CHAMPION_DATA = "http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/champion.json";
+export const CHAMPION_DATA = "http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion.json";
 
 export const fetchChampions = () => {
   return $.getJSON(CHAMPION_DATA);
@@ -16,14 +16,14 @@ export const getChampionRotations = () => {
 };
 
 export const fetchChampionIcon = (championName) => (
-  `http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/${championName}.png`
+  `http://ddragon.leagueoflegends.com/cdn/8.24.1/img/champion/${championName}.png`
 )
 
 export const fetchChampionData = (championName, callback) => {
-  return $.getJSON(`http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/champion/${championName}.json`,
+  return $.getJSON(`http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion/${championName}.json`,
       callback )
 }
 
 export const fetchChampionSkillIcon = (spellName) => (
-  `http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/${spellName}`
+  `http://ddragon.leagueoflegends.com/cdn/8.24.1/img/spell/${spellName}`
 )

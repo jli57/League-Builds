@@ -32,7 +32,13 @@
 		"express-session": "^1.15.6",
 		"express-validator": "^5.3.0",
 		"lodash": "^4.17.11",
+<<<<<<< HEAD
 		"mongoose": "^5.4.0",		
+=======
+		"mongodb": "^3.1.6",
+		"mongoose": "^5.3.2",
+		"nodemon": "^1.18.9",
+>>>>>>> 7287134cae871f334ca3abe137dad6a86280a289
 		"passport": "^0.4.0",
 		"passport-http": "^0.3.0",
 		"passport-local": "^1.0.0",
