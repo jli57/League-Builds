@@ -65,9 +65,9 @@ const clientConfig = {
 	},
 
 	plugins: [
-		// new CleanWebpackPlugin(['dist'], {
-		// 	exclude: ['index.html']
-		// }),
+		new CleanWebpackPlugin(['dist'], {
+			exclude: ['index.html']
+		}),
 		new HtmlWebpackPlugin({
 			title: 'test',
 			template: './dist/index.html',
