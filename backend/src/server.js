@@ -21,6 +21,7 @@ const userRoutes = require('./routes/api/user-routes');
 const championRoutes = require('./routes/api/champion-routes');
 const itemRoutes = require('./routes/api/item-routes');
 const runesReforgedRoutes = require('./routes/api/runes-reforged-routes');
+const versionRoutes = require('./routes/api/version-routes');
 
 // declare express
 const app = express();
@@ -84,6 +85,7 @@ app.use('/user', userRoutes);
 app.use('/ddragon/champions', championRoutes);
 app.use('/ddragon/items', itemRoutes);
 app.use('/ddragon/runesreforged', runesReforgedRoutes);
+app.use('/ddragon/version', versionRoutes);
 
 // set up port
 app.set('port', (process.env.PORT || 8000));
