@@ -16,6 +16,18 @@ describe("DDragon Champion", function () {
 		done();
 	});
 
+	it("should retrieve a champion by id", async (done) => {
+		try {
+			let res = await axios.get('/42', config);
+
+			expect(res.status).toBe(200);
+			expect(res.data).not.toEqual({});
+		} catch (ex) {
+			done.fail(ex.message);
+		}
+		done();
+	});
+
 	it("should retrieve a champion by name", async (done) => {
 		try {
 			let res = await axios.get('/Annie', config);
