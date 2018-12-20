@@ -3,21 +3,14 @@ const HttpError = require('../../errors/HttpError');
 const axios = require('axios');
 
 const ChampionController = function () {
-	let exists = (obj, res) => {		
-		if (obj)
-			res.status(200).json(obj);
-		else
-			throw new HttpError(404, 'Champion does not exist');
-	};
 
 	let championAPI = async (req, res) => {
-		try {
-			let champions = await axios.get(`${DDragonService.getPath(CHAMPION_DATA)}`);
+		let champions = await axios.get(`${DDragonService.getPath(CHAMPION_DATA)}`);
 
+		if (champions)
 			return champions.data.data;
-		} catch (ex) {
+		else
 			throw new HttpError(404, 'DDragon is down');
-		}
 	};
 
 	let championIdAPI = async (req, res) => {
@@ -31,9 +24,7 @@ const ChampionController = function () {
 	}
 
 	let championNameAPI = async (req, res) => {
-		let champions = await championAPI(req, res);
-
-		return champions[req.params.noun];
+		return (await championAPI(req, res))[req.params.noun];
 	}
 
 	let getAllChampions = async (req, res) => {
@@ -45,8 +36,8 @@ const ChampionController = function () {
 	};
 
 	let getChampionById = async (req, res) => {
-		try {			
-			return exists(await championIdAPI(req, res), res);
+		try {
+			res.status(200).json(await championIdAPI(req, res));
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}
@@ -54,7 +45,7 @@ const ChampionController = function () {
 
 	let getChampionByName = async (req, res) => {
 		try {
-			return exists(await championNameAPI(req, res), res);
+			res.status(200).json(await championNameAPI(req, res));
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}
