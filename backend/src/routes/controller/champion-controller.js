@@ -7,8 +7,13 @@ const ChampionController = function () {
 	let championAPI = async (req, res) => {
 		let champions = await axios.get(`${DDragonService.getPath(CHAMPION_DATA)}`);
 
-		if (champions)
+		if (champions) {			
+			champions.data.data.Wukong = champions.data.data.MonkeyKing;
+			champions.data.data.Wukong.id = 'Wukong';
+			delete champions.data.data.MonkeyKing			
+
 			return champions.data.data;
+		}
 		else
 			throw new HttpError(404, 'DDragon is down');
 	};
