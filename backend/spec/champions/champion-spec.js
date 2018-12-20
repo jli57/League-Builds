@@ -9,19 +9,20 @@ describe("DDragon Champion", function () {
 			let res = await axios.get('/all', config);
 			
 			expect(res.status).toBe(200);
-			expect(res.data).not.toEqual({});
+			expect(res.data.Kindred).toBeDefined();
 		} catch (ex) {
 			done.fail(ex.message);
 		}
 		done();
 	});
 
-	it("should retrieve a champion by id", async (done) => {
+	it("should retrieve a champion by key", async (done) => {
 		try {
-			let res = await axios.get('/42', config);
+			let key = '42';
+			let res = await axios.get(`/${42}`, config);
 
 			expect(res.status).toBe(200);
-			expect(res.data).not.toEqual({});
+			expect(res.data.key).toEqual(key);
 		} catch (ex) {
 			done.fail(ex.message);
 		}
@@ -30,10 +31,11 @@ describe("DDragon Champion", function () {
 
 	it("should retrieve a champion by name", async (done) => {
 		try {
-			let res = await axios.get('/Annie', config);
+			let name = 'Annie';
+			let res = await axios.get(`/${name}`, config);
 
 			expect(res.status).toBe(200);
-			expect(res.data).not.toEqual({});
+			expect(res.data.name).toEqual(name);
 		} catch (ex) {
 			done.fail(ex.message);
 		}
@@ -44,8 +46,9 @@ describe("DDragon Champion", function () {
 		try {
 			let res = await axios.get('/42/image', config);
 
-			expect(res.status).toBe(200);
-			expect(res.data).toBeDefined();
+			expect(res.status).toBe(200);			
+			expect(res.data.src).toBeDefined();			
+			expect((await axios.get(res.data.src)).status).toBe(200);
 		} catch (ex) {
 			done.fail(ex.message);
 		}
@@ -57,7 +60,8 @@ describe("DDragon Champion", function () {
 			let res = await axios.get('/Annie/image', config);
 
 			expect(res.status).toBe(200);
-			expect(res.data).toBeDefined();
+			expect(res.data.src).toBeDefined();
+			expect((await axios.get(res.data.src)).status).toBe(200);
 		} catch (ex) {
 			done.fail(ex.message);
 		}
