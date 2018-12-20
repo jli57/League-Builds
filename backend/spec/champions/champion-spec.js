@@ -42,6 +42,19 @@ describe("DDragon Champion", function () {
 		done();
 	});
 
+	it("should check to see if MonkeyKing is renamed to Wukong", async (done) => {
+		try {
+			let name = 'Wukong';
+			let res = await axios.get(`/${name}`, config);
+
+			expect(res.status).toBe(200);
+			expect(res.data.name).toEqual(name);
+		} catch (ex) {
+			done.fail(ex.message);
+		}
+		done();
+	});
+
 	it("should retrieve a champion image url by id", async (done) => {
 		try {
 			let res = await axios.get('/42/image', config);
