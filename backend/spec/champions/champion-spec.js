@@ -42,7 +42,10 @@ describe("DDragon Champion", function () {
 
 	it("should retrieve a champion image url by id", async (done) => {
 		try {
-			fail('unimplemented');
+			let res = await axios.get('/42/image', config);
+
+			expect(res.status).toBe(200);
+			expect(res.data).toBeDefined()
 		} catch (ex) {
 			done.fail(ex.message);
 		}
