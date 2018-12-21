@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+//import Sass from './styles/sass/main.scss'
 import Root from './components/root';
 import { configureStore } from './store/store.js'
 
