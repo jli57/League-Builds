@@ -30,4 +30,18 @@ describe('DDragon Item', function () {
 		}
 		done();
 	});
+
+	it('should get an item image url', async (done) => {
+		try{
+			let id = '1001';
+			let res = await axios.get(`/${id}/image`, config);
+
+			expect(res.status).toBe(200);
+			expect(res.data).toBeDefined();
+			expect((await axios.get(res.data.src)).status).toBe(200);
+		}catch(ex){
+			fail(ex.msg);
+		}
+		done();
+	})
 });
