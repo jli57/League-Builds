@@ -1,5 +1,5 @@
-const { baseURL, championImage, championPath, itemPath, itemImagePath, championImagePath, runesReforgedImagePath, runesReforgedPath, versions} = require('../../../config/ddragon');
-
+const { baseURL1, baseURL, championImage, championPath, itemPath, itemImagePath, championImagePath, runesReforgedImagePath, runesReforgedPath, versions} = require('../../../config/ddragon');
+const {latestVersion} = require('../../../config/settings');
 const CHAMPION_DATA = 'CHAMPION_DATA';
 const CHAMPION_IMAGE = 'CHAMPION_IMAGE';
 const ITEM_DATA = 'ITEM_DATA';
@@ -11,8 +11,8 @@ const VERSION = 'VERSION';
 const DDragonService = function () {
 	let getPath = token => {
 		switch (token) {
-			case 'CHAMPION_DATA': return baseURL + championPath
-			case 'CHAMPION_IMAGE': return baseURL + championImagePath
+			case 'CHAMPION_DATA': return `${baseURL1}/${latestVersion}${championPath}`
+			case 'CHAMPION_IMAGE': return `${baseURL1}/${latestVersion}${championImagePath}`
 			case 'ITEM_DATA': return baseURL + itemPath
 			case 'ITEM_IMAGE': return baseURL + itemImagePath
 			case 'RUNESREFORGED_DATA': return baseURL + runesReforgedPath
