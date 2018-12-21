@@ -3,7 +3,7 @@ const HttpError = require('../../errors/HttpError');
 const axios = require('axios');
 
 const ItemController = function () {
-	let exists = (obj, res) => {		
+	let exists = (obj, res) => {
 		if (obj)
 			res.status(200).json(obj);
 		else
@@ -11,18 +11,16 @@ const ItemController = function () {
 	};
 
 	let itemAPI = async (req, res) => {
-		try {
-			let items = await axios.get(`${DDragonService.getPath(ITEM_DATA)}`);
+		let items = await axios.get(`${DDragonService.getPath(ITEM_DATA)}`);
 
+		if (items)
 			return items.data.data;
-		} catch (ex) {
+		else
 			throw new HttpError(404, 'DDragon is down');
-		}
 	};
 
-	let itemIdAPI = async (req, res) => {
-		let items = await itemAPI(req, res);		
-		return items[req.params.id];
+	let itemIdAPI = async (req, res) => {		
+		return (await itemAPI(req, res))[req.params.id];
 	}
 
 	let itemNameAPI = async (req, res) => {
@@ -39,7 +37,7 @@ const ItemController = function () {
 
 	let getItemById = async (req, res) => {
 		try {
-			return exists(await itemIdAPI(req, res), res);
+			res.status(200).json(await itemIdAPI(req, res));			
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}
