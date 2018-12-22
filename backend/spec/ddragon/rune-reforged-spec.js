@@ -18,13 +18,13 @@ describe('DDragon Rune Reforged', () => {
 
 	it('should retrieve a reforged rune tree', async (done) => {
 		try {
-			let trees = ['8000', '8100', '8200', '8300', '8400'];
+			let trees = [8000, 8100, 8200, 8300, 8400];
 			for (var i = 0; i < trees.length; i++) {
 				let res = await axios.get(`/tree/${trees[i]}`, config);
 
 				expect(res.status).toBe(200);
 				expect(res.data).toBeDefined();
-				expect(res.data.id).toEqual(tree[i]);
+				expect(res.data.id).toEqual(trees[i]);
 			}
 
 		} catch (ex) {
@@ -35,13 +35,13 @@ describe('DDragon Rune Reforged', () => {
 
 	it('should retrieve a reforged rune by id', async (done) => {
 		try {
-			let trees = ['8100', '8214'];
+			let trees = [8100, 8214];
 			for (var i = 0; i < trees.length; i++) {
 				let res = await axios.get(`/${trees[i]}`, config);
 
 				expect(res.status).toBe(200);
-				expect(res.data).toBeDefined();
-				expect(res.data.id).toEqual(tree[i]);
+				expect(res.data).toBeDefined();				
+				expect(res.data.id).toEqual(trees[i]);				
 			}
 		} catch (ex) {
 			fail(ex.msg);

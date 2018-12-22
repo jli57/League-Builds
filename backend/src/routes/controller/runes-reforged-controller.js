@@ -60,7 +60,7 @@ const RunesReforgedController = function () {
 
 	let getRunesReforgedById = async (req, res) => {
 		try {
-			return exists(await runesIdAPI(req, res), res);
+			res.status(200).json(await runesIdAPI(req, res));
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}
