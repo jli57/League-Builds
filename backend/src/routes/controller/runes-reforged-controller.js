@@ -10,13 +10,20 @@ const RunesReforgedController = function () {
 			throw new HttpError(404, 'RunesReforged does not exist');
 	};
 
-	let runesAPI = async (req, res) => {
-		try {
-			let runes = await axios.get(`${DDragonService.getPath(RUNESREFORGED_DATA)}`);
+	let runesAPI = async () => {
+		let runes = await axios.get(`${DDragonService.getPath(RUNESREFORGED_DATA)}`);
 
+		if (runes)
 			return runes.data;
-		} catch (ex) {
+		else
 			throw new HttpError(404, 'DDragon is down');
+	};
+
+	let getAllRunes = async (req, res) => {
+		try {
+			return res.status(200).json(await runesAPI());
+		} catch (ex) {
+			res.status(ex.statusCode || 500).json({ errors: ex.msg })
 		}
 	};
 
@@ -92,7 +99,8 @@ const RunesReforgedController = function () {
 		getRunesReforgedById: getRunesReforgedById,
 		getRunesReforgedByName: getRunesReforgedByName,
 		getRunesReforgedImageById: getRunesReforgedImageById,
-		getRunesReforgedImageByName: getRunesReforgedImageByName
+		getRunesReforgedImageByName: getRunesReforgedImageByName,
+		getAllRunes: getAllRunes,
 	}
 }();
 

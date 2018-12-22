@@ -3,7 +3,7 @@ const router = express.Router();
 const RunesReforgedController = require('../controller/runes-reforged-controller');
 
 router.get('/', (req, res) => {
-	res.status(404).json({error: 'unimplemented'});	
+	RunesReforgedController.getAllRunes(req, res);
 })
 
 router.get('/tree/:id', (req, res) => {
