@@ -75,11 +75,11 @@ const RunesReforgedController = function () {
 	};
 
 	let getRunesReforgedImage = (runes) => {
-		return `${DDragonService.getPath(RUNESREFORGED_IMAGE)}/${runes.image.full}`;
+		return `${DDragonService.getPath(RUNESREFORGED_IMAGE)}/${runes.icon}`;
 	}
 
 	let getRunesReforgedImageById = async (req, res) => {
-		try {
+		try {			
 			res.status(200).json({ src: getRunesReforgedImage(await runesIdAPI(req, res)) });
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
@@ -96,7 +96,6 @@ const RunesReforgedController = function () {
 
 	let getRunesReforgedTreeById = async (req, res) => {
 		try {
-			console.log(req.params.noun);
 			req.params.id = req.params.noun;
 			switch (req.params.noun) {
 				case '8000': case '8100': case '8200': case '8300': case '8400':					
