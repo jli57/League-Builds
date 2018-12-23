@@ -94,6 +94,22 @@ const RunesReforgedController = function () {
 		}
 	}
 
+	let getRunesReforgedTreeById = async (req, res) => {
+		try {
+			console.log(req.params.noun);
+			req.params.id = req.params.noun;
+			switch (req.params.noun) {
+				case '8000': case '8100': case '8200': case '8300': case '8400':					
+					res.status(200).json(await runesIdAPI(req, res));
+					break;				
+				default:
+					throw new HttpError(404, 'id does not reference a tree');
+			}
+		} catch (ex) {
+			res.status(ex.statusCode || 500).json({ errors: ex.msg });
+		}
+	};
+
 	return {
 		getAllRunesReforgeds: getAllRunesReforgeds,
 		getRunesReforgedById: getRunesReforgedById,
@@ -101,6 +117,7 @@ const RunesReforgedController = function () {
 		getRunesReforgedImageById: getRunesReforgedImageById,
 		getRunesReforgedImageByName: getRunesReforgedImageByName,
 		getAllRunes: getAllRunes,
+		getRunesReforgedTreeById: getRunesReforgedTreeById
 	}
 }();
 

@@ -6,8 +6,11 @@ router.get('/', (req, res) => {
 	RunesReforgedController.getAllRunes(req, res);
 })
 
-router.get('/tree/:id', (req, res) => {
-	res.status(404).json({error: 'unimplemented'});
+router.get('/tree/:noun', (req, res) => {
+	if (isNaN(req.params.noun))
+		res.status(404).json({ error: 'unimplemented' });
+	else
+	RunesReforgedController.getRunesReforgedTreeById(req,res);
 });
 
 router.get('/:id', (req, res) => {
