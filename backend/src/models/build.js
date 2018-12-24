@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ChampionBuildSchema = mongoose.Schema({
+const BuildSchema = mongoose.Schema({
     champion: {
         type: String
     },
@@ -20,7 +20,18 @@ const ChampionBuildSchema = mongoose.Schema({
 	 ],	 
 	 level: {
 		 type: Number
+	 },
+	 user: {
+		 type: String
 	 }
 });
 
-const ChampionBuild = modules.export = mongoose.model('ChampionBuild', ChampionBuildSchema);
+const Build = modules.export = mongoose.model('Build', BuildSchema);
+
+module.exports.createBuild = async (newBuild) => {
+	return await newBuild.save();
+};
+
+module.exports.saveBuild = async (buildId, newBuild) => {	
+	await Build.update({_id: buildId}, newBuild);	
+};
