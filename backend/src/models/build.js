@@ -6,18 +6,21 @@ const ChampionBuildSchema = mongoose.Schema({
     },
     items: [
         {
-            name: {
+            id: {
                 type: String
             }
         }
     ], 
-    masteries: [
+    runesReforged: [
         {
-            name: {
+            id: {
                 type: String
             }
         }
-    ],
+	 ],	 
+	 level: {
+		 type: Number
+	 }
 });
 
 const ChampionBuild = modules.export = mongoose.model('ChampionBuild', ChampionBuildSchema);
