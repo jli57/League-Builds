@@ -1,44 +1,34 @@
 const express = require('express');
 const router = express.Router();
 
-// retrieve the build
-router.get('/:id', (req, res) => {
+// get all existing builds for the user
+router.get('/:session', (req, res) => {
 	throw new Error('unimplemented');
 });
 
-
-// crud items
-router.get('/:id/item/:slot', (req, res) => {
-	throw new Error('unimplemented');
-});
-
-router.delete('/:id/remove/:slot', (req, res) => {
+// gets build id
+router.get('/:session/:build', (req, res) => {
 	throw new Error('unimplemented');
 })
 
-router.delete('/clear/:id/', (req, res) => {
+// create a new build
+router.post('/:session', (req, res) => {
 	throw new Error('unimplemented');
 });
 
-router.delete('/dispose/:id', (req, res) => {
-	throw new Error('unimplemented');
-})
-
-router.post('/:id/add/item/:itemId', (req, res) => {
+// updates a build 
+router.put('/:session/:build', (req ,res) => {
 	throw new Error('unimplemented');
 });
 
-// crud champion
-router.post('/:id/level/:level', (req, res) => {
+// deletes a specific build
+router.delete('/:session/:build', (req, res) => {
 	throw new Error('unimplemented');
-})
-
-router.post('/:id/add/champion/:champId', (req, res) => {
-	throw new Error('unimplemented');
-})
-
-router.delete('/:id/remove/champion/:champId', (req, res) => {
-	throw new Error('unimplemeted');
 });
 
-// crud runes reforged
+// deletes every build a user has
+router.delete('/:session', (req, res) => {
+	throw new Error('unimplemented');
+});
+
+module.exports = router;
