@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const BuildController = require('../controller/build-controller');
 
 // get all existing builds for the user
 router.get('/:session', (req, res) => {
@@ -13,11 +14,12 @@ router.get('/:session/:build', (req, res) => {
 
 // create a new build
 router.post('/:session', (req, res) => {
-	throw new Error('unimplemented');
+	console.log('in controller')
+	BuildController.createNewBuild(req, res);
 });
 
 // updates a build 
-router.put('/:session/:build', (req ,res) => {
+router.put('/:session/:build', (req, res) => {
 	throw new Error('unimplemented');
 });
 
