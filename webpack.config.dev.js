@@ -65,18 +65,18 @@ const clientConfig = {
 	},
 
 	plugins: [
-		new CleanWebpackPlugin(['dist'], {
-			exclude: ['index.html']
-		}),
+		// new CleanWebpackPlugin(['dist'], {
+		// 	exclude: ['index.html']
+		// }),
 		new HtmlWebpackPlugin({
 			title: 'test',
 			template: './dist/index.html',
 		}),
 	],
 
-	devServer: {
-		port: 3000,
-	}
+	// devServer: {
+	// 	port: 3000,
+	// }
 };
 
 
