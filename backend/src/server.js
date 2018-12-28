@@ -77,6 +77,8 @@ app.use(expressValidator({
 }));
 
 app.use(express.static('dist'));
+app.use(express.static('./frontend/src/styles/css'));
+
 
 // render the main page
 app.get('/', (req, res) => {
