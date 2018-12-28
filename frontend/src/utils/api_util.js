@@ -1,9 +1,22 @@
 import API_KEY from './api_key';
 
+import axios from 'axios';
+
 export const CHAMPION_DATA = "http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion.json";
 
+// export const fetchChampions = () => {
+//   return axios.get('/ddragon/champions/all')
+//     .then( (res) => {
+//       console.log(res);
+//     })
+// }
+
+
 export const fetchChampions = () => {
-  return $.getJSON(CHAMPION_DATA);
+  return $.ajax({
+    type: "GET",
+    url: "/ddragon/champions/all"
+  })
 }
 
 export const getChampionRotations = () => {
