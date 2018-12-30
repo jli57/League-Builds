@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
  fetchChampions: () => dispatch(fetchChampions()),
- fetchChampionData: (championId) => dispatch(fetchChampionData(championId))
+ fetchChampionData: (championKey) => dispatch(fetchChampionData(championKey))
 });
 
 const ChampionSearchContainer = connect(mapStateToProps, mapDispatchToProps)

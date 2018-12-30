@@ -27,18 +27,9 @@ export const getChampionRotations = () => {
 };
 
 
-export const fetchChampionData = (championName) => {
-  return $.getJSON(`http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion/${championName}.json`);
-	// try {
-	// 	axios.get(`http://localhost:8000/ddragon/champions/${championName}`)
-	// 		.then(res => console.log(res))
-	// 		.catch(ex => console.log(ex));
-	// 	return $.getJSON(`http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion/${championName}.json`,
-	// 		callback)
-
-	// } catch (ex) {
-	// 	console.log(ex);
-	// }
+export const fetchChampionData = (championKey) => {
+  return axios.get(`/api/ddragon/champions/${championKey}`)
+  // return $.getJSON(`http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion/${championKey}.json`);
 }
 
 export const fetchChampionSkillIcon = (spellName) => (
