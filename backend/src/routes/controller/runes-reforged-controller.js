@@ -10,13 +10,20 @@ const RunesReforgedController = function () {
 			throw new HttpError(404, 'RunesReforged does not exist');
 	};
 
-	let runesAPI = async (req, res) => {
-		try {
-			let runes = await axios.get(`${DDragonService.getPath(RUNESREFORGED_DATA)}`);
+	let runesAPI = async () => {
+		let runes = await axios.get(`${DDragonService.getPath(RUNESREFORGED_DATA)}`);
 
+		if (runes)
 			return runes.data;
-		} catch (ex) {
+		else
 			throw new HttpError(404, 'DDragon is down');
+	};
+
+	let getAllRunes = async (req, res) => {
+		try {
+			return res.status(200).json(await runesAPI());
+		} catch (ex) {
+			res.status(ex.statusCode || 500).json({ errors: ex.msg })
 		}
 	};
 
@@ -53,7 +60,7 @@ const RunesReforgedController = function () {
 
 	let getRunesReforgedById = async (req, res) => {
 		try {
-			return exists(await runesIdAPI(req, res), res);
+			res.status(200).json(await runesIdAPI(req, res));
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}
@@ -68,11 +75,11 @@ const RunesReforgedController = function () {
 	};
 
 	let getRunesReforgedImage = (runes) => {
-		return `${DDragonService.getPath(RUNESREFORGED_IMAGE)}/${runes.image.full}`;
+		return `${DDragonService.getPath(RUNESREFORGED_IMAGE)}/${runes.icon}`;
 	}
 
 	let getRunesReforgedImageById = async (req, res) => {
-		try {
+		try {			
 			res.status(200).json({ src: getRunesReforgedImage(await runesIdAPI(req, res)) });
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
@@ -87,12 +94,29 @@ const RunesReforgedController = function () {
 		}
 	}
 
+	let getRunesReforgedTreeById = async (req, res) => {
+		try {
+			req.params.id = req.params.noun;
+			switch (req.params.noun) {
+				case '8000': case '8100': case '8200': case '8300': case '8400':					
+					res.status(200).json(await runesIdAPI(req, res));
+					break;				
+				default:
+					throw new HttpError(404, 'id does not reference a tree');
+			}
+		} catch (ex) {
+			res.status(ex.statusCode || 500).json({ errors: ex.msg });
+		}
+	};
+
 	return {
 		getAllRunesReforgeds: getAllRunesReforgeds,
 		getRunesReforgedById: getRunesReforgedById,
 		getRunesReforgedByName: getRunesReforgedByName,
 		getRunesReforgedImageById: getRunesReforgedImageById,
-		getRunesReforgedImageByName: getRunesReforgedImageByName
+		getRunesReforgedImageByName: getRunesReforgedImageByName,
+		getAllRunes: getAllRunes,
+		getRunesReforgedTreeById: getRunesReforgedTreeById
 	}
 }();
 

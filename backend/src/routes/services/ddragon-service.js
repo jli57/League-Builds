@@ -16,7 +16,7 @@ const DDragonService = function () {
 			case 'ITEM_DATA': return baseURL + itemPath
 			case 'ITEM_IMAGE': return baseURL + itemImagePath
 			case 'RUNESREFORGED_DATA': return baseURL + runesReforgedPath
-			case 'RUNESREFORGED_IMAGE': return baseURL + runesReforgedImagePath
+			case 'RUNESREFORGED_IMAGE': return baseURL1 + runesReforgedImagePath
 			case 'VERSION': return versions
 			default: return 'false'; // should add throw something
 		}

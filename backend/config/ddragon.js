@@ -11,5 +11,5 @@ module.exports = {
 	itemPath: '/data/en_US/item.json',
 	itemImagePath: '/img/item',
 	runesReforgedPath: '/data/en_US/runesReforged.json',
-	runesReforgedImagePath: '/img/runesReforged'
+	runesReforgedImagePath: '/img'
 }
