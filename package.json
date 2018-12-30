@@ -8,7 +8,7 @@
 		"build": "webpack --config webpack.config.dev.js --mode=development --display-error-details",
 		"build-css": "node-sass --include-path scss ./frontend/src/styles/sass/main.scss  ./frontend/src/styles/css/main.css",
 		"client": "webpack-dev-server --open --hot --inline --config webpack.config.dev.js",
-    "server": "nodemon ./backend/src/server.js --ignore './frontend'",
+		"server": "nodemon ./backend/src/server.js --ignore './frontend'",
 		"dev": "concurrently --kill-others \"npm run client\" \"npm run server\""
 	},
 	"keywords": [],
