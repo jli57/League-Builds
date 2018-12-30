@@ -7,12 +7,12 @@ const ChampionController = function () {
 	let championAPI = async (req, res) => {
 		let champions = await axios.get(`${DDragonService.getPath(CHAMPION_DATA)}`);
 
-		if (champions) {			
-			champions.data.data.Wukong = champions.data.data.MonkeyKing;
-			champions.data.data.Wukong.id = 'Wukong';
-			delete champions.data.data.MonkeyKing			
-
-			return champions.data.data;
+		if (champions) {
+      let championData = champions.data.data;
+      for ( var champion in championData ) {
+        championData[champion].image.full = getChampionImage(championData[champion]);
+      }
+      return championData;
 		}
 		else
 			throw new HttpError(404, 'DDragon is down');
