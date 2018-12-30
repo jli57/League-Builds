@@ -1,40 +1,55 @@
-const { DDragonService, CHAMPION_DATA, CHAMPION_IMAGE } = require('../services/ddragon-service');
+const { DDragonService, CHAMPION_DATA, CHAMPION_IMAGE, ALL_CHAMPIONS } = require('../services/ddragon-service');
 const HttpError = require('../../errors/HttpError');
 const axios = require('axios');
 
 const ChampionController = function () {
 
-	let championAPI = async (req, res) => {
-		let champions = await axios.get(`${DDragonService.getPath(CHAMPION_DATA)}`);
+  let allChampionsAPI = async (req, res) => {
+		let champions = await axios.get(`${DDragonService.getPath(ALL_CHAMPIONS)}`);
 
 		if (champions) {
-      let championData = champions.data.data;
+      const championData = champions.data.data;
+      let result = {};
       for ( var champion in championData ) {
-        championData[champion].image.full = getChampionImage(championData[champion]);
+        const key = championData[champion].key;
+        result[key] = championData[champion];
+        result[key].image.full = getChampionImage(championData[champion]);
       }
-      return championData;
+      return result;
+		}
+		else
+			throw new HttpError(404, 'DDragon is down');
+  };
+
+	let championAPI = async (req, res) => {
+
+    const championName = await championNameAPI(req, res);
+
+		const result = await axios.get(`${DDragonService.getPath(`CHAMPION_DATA`)}/${championName}.json`);
+		if (result) {
+      let championData = result.data.data[championName];
+      championData.image.full = getChampionImage(result.data.data[championName]);
+      return { [req.params.noun]: championData};
 		}
 		else
 			throw new HttpError(404, 'DDragon is down');
 	};
 
 	let championIdAPI = async (req, res) => {
-		let champions = await championAPI(req, res);
-
-		for (var champion in champions)
-			if (champions[champion].key === req.params.noun)
-				return champions[champion];
-
-		throw new HttpError(404, 'Champion does not exist');
+		return (await championAPI(req, res))[req.params.noun];
 	}
 
 	let championNameAPI = async (req, res) => {
-		return (await championAPI(req, res))[req.params.noun];
+    let champions = await allChampionsAPI(req, res);
+    if ( champions[req.params.noun] ) return champions[req.params.noun].id;
+
+    throw new HttpError(404, 'Champion does not exist');
+
 	}
 
 	let getAllChampions = async (req, res) => {
 		try {
-			res.status(200).json(await championAPI(req, res));
+			res.status(200).json(await allChampionsAPI(req, res));
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}
@@ -42,7 +57,7 @@ const ChampionController = function () {
 
 	let getChampionById = async (req, res) => {
 		try {
-			res.status(200).json(await championIdAPI(req, res));
+			res.status(200).json(await championAPI(req, res));
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}

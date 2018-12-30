@@ -92,7 +92,7 @@ app.use(expressValidator({
 
 app.use(cors());
 
-// routes 
+// routes
 app.use('/api/user', userRoutes);
 app.use('/api/ddragon/champions', championRoutes);
 app.use('/api/ddragon/items', itemRoutes);
