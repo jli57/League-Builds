@@ -2,9 +2,6 @@ import 'babel-polyfill'
 import API_KEY from './api_key';
 import axios from 'axios';
 
-
-import axios from 'axios';
-
 export const CHAMPION_DATA = "http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion.json";
 
 // export const fetchChampions = () => {
@@ -16,11 +13,8 @@ export const CHAMPION_DATA = "http://ddragon.leagueoflegends.com/cdn/8.24.1/data
 
 
 export const fetchChampions = () => {
-  // return $.ajax({
-  //   type: "GET",
-  //   url: "/ddragon/champions/all"
-  // })
-	return $.getJSON(CHAMPION_DATA);
+  return axios.get('/api/ddragon/champions/all');
+	// return $.getJSON(CHAMPION_DATA);
 }
 
 export const getChampionRotations = () => {
@@ -32,36 +26,19 @@ export const getChampionRotations = () => {
 	})
 };
 
-export const fetchChampionIcon = (championName) => {
-	return axios.get(`/api/ddragon/champions/${championName}/image`);
 
-	// let k =
-	// 	.then(res => {
-	// 		//console.log(res.data.src)
-	// 		return res.data.src
-	// 	})
+export const fetchChampionData = (championName) => {
+  return $.getJSON(`http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion/${championName}.json`);
+	// try {
+	// 	axios.get(`http://localhost:8000/ddragon/champions/${championName}`)
+	// 		.then(res => console.log(res))
+	// 		.catch(ex => console.log(ex));
+	// 	return $.getJSON(`http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion/${championName}.json`,
+	// 		callback)
 
-	// //console.log(k);
-	// //try{
-	// //let k = await axios.get(`http://localhost:8000/api/ddragon/champions/${championName}/image`);
-	// //return `http://ddragon.leagueoflegends.com/cdn/8.24.1/img/champion/${championName}.png`;
-	// return k;
-
-	//req.then(success => )
-
-}
-
-export const fetchChampionData = (championName, callback) => {
-	try {
-		axios.get(`http://localhost:8000/ddragon/champions/${championName}`)
-			.then(res => console.log(res))
-			.catch(ex => console.log(ex));
-		return $.getJSON(`http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion/${championName}.json`,
-			callback)
-
-	} catch (ex) {
-		console.log(ex);
-	}
+	// } catch (ex) {
+	// 	console.log(ex);
+	// }
 }
 
 export const fetchChampionSkillIcon = (spellName) => (
