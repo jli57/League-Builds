@@ -52,19 +52,30 @@ const BuildController = function () {
 
 	let saveBuild = async (req, res) => {
 		try {
+			console.log('saveBuild');
 			let session = await SessionService.getSession(req.params.session);
 			let user = await UserService.getUserById(session.userId);
-
-			let build = await Build.findByIdAndUpdate(user.builds[req.params.build],
+			//console.log(req.params.build)
+			//console.log(user.builds[req.params.build])
+			var i = 0;
+			for (; i < user.builds.length; i++) {
+				console.log(user.builds[i]._id)
+				if (user.builds[i]._id == req.params.build)
+				 break;
+			}
+			console.log(i);
+			let build = await Build.findByIdAndUpdate(user.builds[i]._id,
 				{
-					champion: req.body.champion,
-					items: req.body.items,
-					runesReforged: req.body.runesReforged,
-					level: req.body.level,
+					champion: req.body.build.champion,
+					items: req.body.build.items,
+					runesReforged: req.body.build.runesReforged,
+					level: req.body.build.level,
 				});
-			await build.save();
+
+			console.log(build);
 			res.status(204).json({});
 		} catch (ex) {
+			console.log(ex);
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}
 	}
