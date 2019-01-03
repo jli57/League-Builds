@@ -4,32 +4,32 @@ const axios = require('axios');
 
 const ChampionController = function () {
 
-  let allChampionsAPI = async (req, res) => {
+	let allChampionsAPI = async (req, res) => {
 		let champions = await axios.get(`${DDragonService.getPath(ALL_CHAMPIONS)}`);
 
 		if (champions) {
-      const championData = champions.data.data;
-      let result = {};
-      for ( var champion in championData ) {
-        const key = championData[champion].key;
-        result[key] = championData[champion];
-        result[key].image.full = getChampionImage(championData[champion]);
-      }
-      return result;
+			const championData = champions.data.data;
+			let result = {};
+			for (var champion in championData) {
+				const key = championData[champion].key;
+				result[key] = championData[champion];
+				result[key].image.full = getChampionImage(championData[champion]);
+			}
+			return result;
 		}
 		else
 			throw new HttpError(404, 'DDragon is down');
-  };
+	};
 
 	let championAPI = async (req, res) => {
 
-    const championName = await championNameAPI(req, res);
+		const championName = await championNameAPI(req, res);
 
 		const result = await axios.get(`${DDragonService.getPath(`CHAMPION_DATA`)}/${championName}.json`);
 		if (result) {
-      let championData = result.data.data[championName];
-      championData.image.full = getChampionImage(result.data.data[championName]);
-      return { [req.params.noun]: championData};
+			let championData = result.data.data[championName];
+			championData.image.full = getChampionImage(result.data.data[championName]);
+			return { [req.params.noun]: championData };
 		}
 		else
 			throw new HttpError(404, 'DDragon is down');
@@ -40,10 +40,10 @@ const ChampionController = function () {
 	}
 
 	let championNameAPI = async (req, res) => {
-    let champions = await allChampionsAPI(req, res);
-    if ( champions[req.params.noun] ) return champions[req.params.noun].id;
+		let champions = await allChampionsAPI(req, res);
+		if (champions[req.params.noun]) return champions[req.params.noun].id;
 
-    throw new HttpError(404, 'Champion does not exist');
+		throw new HttpError(404, 'Champion does not exist');
 
 	}
 
