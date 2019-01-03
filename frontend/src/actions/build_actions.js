@@ -8,9 +8,9 @@ export const receiveChampion = (champion) => ({
   champion
 });
 
-export const fetchChampionData = (championId) => {
+export const fetchChampionData = (championKey) => {
   return (dispatch) => {
-    return APIUtil.fetchChampionData(championId).then(
+    return APIUtil.fetchChampionData(championKey).then(
       (res) => dispatch(receiveChampion(res.data))
     );
   }

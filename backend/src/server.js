@@ -11,6 +11,7 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackConfig = require('../../webpack.config.dev.js');
 const webpackCompiler = webpack(webpackConfig);
+const cors = require('cors');
 
 // connect to mongo using mongoose
 mongoose.connect(db, { useNewUrlParser: true })
@@ -22,6 +23,7 @@ const championRoutes = require('./routes/api/champion-routes');
 const itemRoutes = require('./routes/api/item-routes');
 const runesReforgedRoutes = require('./routes/api/runes-reforged-routes');
 const versionRoutes = require('./routes/api/version-routes');
+const buildRoutes = require('./routes/api/build-routes');
 
 // declare express
 const app = express();
@@ -80,12 +82,23 @@ app.use(expressValidator({
 // 	res.sendFile('dist/index.html', {root: __dirname});
 // });
 
-// routes 
-app.use('/user', userRoutes);
-app.use('/ddragon/champions', championRoutes);
-app.use('/ddragon/items', itemRoutes);
-app.use('/ddragon/runesreforged', runesReforgedRoutes);
-app.use('/ddragon/version', versionRoutes);
+// let allowCrossDomain = (req, res, next) => {
+// 	res.header('Access-Control-Allow-Origin', 'http://localhost');
+// 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+// 	res.header('Access-Control-Allow-Headers', 'Content-Type');
+// }
+
+//app.use(allowCrossDomain);
+
+app.use(cors());
+
+// routes
+app.use('/api/user', userRoutes);
+app.use('/api/ddragon/champions', championRoutes);
+app.use('/api/ddragon/items', itemRoutes);
+app.use('/api/ddragon/runesreforged', runesReforgedRoutes);
+app.use('/api/ddragon/version', versionRoutes);
+app.use('/api/user/build', buildRoutes);
 
 // set up port
 app.set('port', (process.env.PORT || 8000));

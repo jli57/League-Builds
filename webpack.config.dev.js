@@ -48,7 +48,7 @@ const clientConfig = {
 				test: /\.html$/,
 				use: [
 					{
-						loader: "html-loader"						
+						loader: "html-loader"
 					}
 				]
 			},
@@ -65,9 +65,9 @@ const clientConfig = {
 	},
 
 	plugins: [
-		new CleanWebpackPlugin(['dist'], {
-			exclude: ['index.html']
-		}),
+		// new CleanWebpackPlugin(['dist'], {
+		// 	exclude: ['index.html']
+		// }),
 		new HtmlWebpackPlugin({
 			title: 'test',
 			template: './dist/index.html',
@@ -76,6 +76,10 @@ const clientConfig = {
 
 	devServer: {
 		port: 3000,
+		proxy: {
+			'/api': 'http://localhost:8000',
+
+		}
 	}
 };
 
