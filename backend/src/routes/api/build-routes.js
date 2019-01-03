@@ -7,20 +7,19 @@ router.get('/:session', (req, res) => {
 	BuildController.findAllBuilds(req, res);
 });
 
-// gets build id
+// gets build by id
 router.get('/:session/:build', (req, res) => {
 	throw new Error('unimplemented');
 })
 
 // create a new build
-router.post('/:session', (req, res) => {
-	console.log('in controller')
+router.post('/:session', (req, res) => {	
 	BuildController.createNewBuild(req, res);
 });
 
 // updates a build 
 router.put('/:session/:build', (req, res) => {
-	throw new Error('unimplemented');
+	BuildController.saveBuild(req, res);
 });
 
 // deletes a specific build

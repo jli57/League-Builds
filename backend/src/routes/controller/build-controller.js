@@ -3,7 +3,7 @@ const SessionService = require('../services/session-service');
 const UserService = require('../services/user-service');
 const HttpError = require('../../errors/HttpError');
 
-const BuildController = function () {	
+const BuildController = function () {
 	let createNewBuild = async (req, res) => {
 		try {
 			let session = await SessionService.getSession(req.params.session);
@@ -35,18 +35,38 @@ const BuildController = function () {
 			let session = await SessionService.getSession(req.params.session);
 			let user = await UserService.getUserById(session.userId);
 
-			if(user){
+			if (user) {
 				res.status(200).json(user.builds);
-			}else{
+			} else {
 				throw new HttpError(404, 'User does not exist');
 			}
+		} catch (ex) {
+			res.status(ex.statusCode || 500).json({ errors: ex.msg });
+		}
+	};
+
+	let saveBuild = async (req, res) => {
+		try {
+			let session = await SessionService.getSession(req.params.session);
+			let user = await UserService.getUserById(session.userId);
+
+			let build = await Build.findByIdAndUpdate(user.builds[req.params.build],
+				{
+					champion: req.body.champion,
+					items: req.body.items,
+					runesReforged: req.body.runesReforged,
+					level: req.body.level,
+				});
+			await build.save();
+			res.status(204).json({});
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}
 	}
 	return {
 		createNewBuild: createNewBuild,
-		findAllBuilds: findAllBuilds
+		findAllBuilds: findAllBuilds,
+		saveBuild: saveBuild
 	};
 }();
 
