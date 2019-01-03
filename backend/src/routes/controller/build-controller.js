@@ -36,7 +36,12 @@ const BuildController = function () {
 			let user = await UserService.getUserById(session.userId);
 
 			if (user) {
-				res.status(200).json(user.builds);
+				let builds = [];
+				for (var i = 0; i < user.builds.length; i++) {
+					builds.push(await Build.findById(user.builds[i], { 'user': 0, '__v': 0 }));
+				}
+
+				res.status(200).json(builds);
 			} else {
 				throw new HttpError(404, 'User does not exist');
 			}
