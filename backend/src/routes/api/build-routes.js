@@ -4,7 +4,7 @@ const BuildController = require('../controller/build-controller');
 
 // get all existing builds for the user
 router.get('/:session', (req, res) => {
-	throw new Error('unimplemented');
+	BuildController.findAllBuilds(req, res);
 });
 
 // gets build id
