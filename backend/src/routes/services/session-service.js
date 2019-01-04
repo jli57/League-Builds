@@ -26,7 +26,8 @@ const SessionService = function () {
 	return {
 		getSession: getSession,
 		deleteSession: deleteSession,
-		createSession: createSession
+		createSession: createSession,
+		getUserBuilds: getUserBuilds
 	}
 }();
 
