@@ -85,13 +85,34 @@ const BuildController = function () {
 			let session = await SessionService.getSession(req.params.session);
 			let user = await UserService.getUserById(session.userId);
 
-			await Build.delete({ _id: { $in: user.build } });
 
+			await Build.deleteMany({ _id: { $in: user.builds } });
+			user.builds = [];
+			await user.save();
 			res.status(200).json({});
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}
 	};
+
+	let deleteBuild = async (req, res) => {
+		try {
+			let session = await SessionService.getSession(req.params.session);
+			let user = await UserService.getUserById(session.userId);
+
+			for (var i = 0; i < user.builds.length; i++) {
+				if (user.builds[i]._id == req.params.build) {
+					await Build.findByIdAndDelete(req.params.session);
+					return res.status(200).json({});
+				}
+			}
+			
+			throw new HttpError(404, 'Build does not exist');
+
+		} catch (ex) {
+			res.status(ex.statusCode || 500).json({ errors: ex.msg });
+		}
+	}
 
 	return {
 		createNewBuild: createNewBuild,
