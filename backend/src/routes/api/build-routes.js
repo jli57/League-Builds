@@ -24,12 +24,12 @@ router.put('/:session/:build', (req, res) => {
 
 // deletes a specific build
 router.delete('/:session/:build', (req, res) => {
-	throw new Error('unimplemented');
+	BuildController.deleteBuild(req, res);
 });
 
 // deletes every build a user has
 router.delete('/:session', (req, res) => {
-	throw new Error('unimplemented');
+	BuildController.deleteAll(req, res);
 });
 
 module.exports = router;

@@ -106,7 +106,7 @@ const BuildController = function () {
 					return res.status(200).json({});
 				}
 			}
-			
+
 			throw new HttpError(404, 'Build does not exist');
 
 		} catch (ex) {
@@ -118,7 +118,8 @@ const BuildController = function () {
 		createNewBuild: createNewBuild,
 		findAllBuilds: findAllBuilds,
 		saveBuild: saveBuild,
-		deleteAll: deleteAll
+		deleteAll: deleteAll,
+		deleteBuild: deleteBuild
 	};
 }();
 
