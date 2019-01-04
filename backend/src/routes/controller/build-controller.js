@@ -114,12 +114,21 @@ const BuildController = function () {
 		}
 	}
 
+	let getBuild = async (req, res) => {
+		try {
+			return res.status(200).json(await Build.findById(req.parms.build));
+		} catch (ex) {
+			res.status(ex.statusCode || 500).json({ errors: ex.msg });
+		}
+	}
+
 	return {
 		createNewBuild: createNewBuild,
 		findAllBuilds: findAllBuilds,
 		saveBuild: saveBuild,
 		deleteAll: deleteAll,
-		deleteBuild: deleteBuild
+		deleteBuild: deleteBuild,
+		getBuild: getBuild
 	};
 }();
 

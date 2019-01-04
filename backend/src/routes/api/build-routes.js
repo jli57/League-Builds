@@ -8,8 +8,8 @@ router.get('/:session', (req, res) => {
 });
 
 // gets build by id
-router.get('/:session/:build', (req, res) => {
-	throw new Error('unimplemented');
+router.get('/id/:build', (req, res) => {
+	BuildController.getBuild(req, res);
 })
 
 // create a new build
