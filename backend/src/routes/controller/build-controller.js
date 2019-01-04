@@ -6,8 +6,7 @@ const HttpError = require('../../errors/HttpError');
 const BuildController = function () {
 	let createNewBuild = async (req, res) => {
 		try {
-			let session = await SessionService.getSession(req.params.session);
-			let user = await UserService.getUserById(session.userId);
+			let user = await SessionService.getUserBuilds(req.params.session);
 
 			if (user.builds.length < 10) {
 				let buildId = await Build.createBuild(new Build({
@@ -19,7 +18,7 @@ const BuildController = function () {
 				}));
 
 				console.log(buildId._id)
-				user.builds.push(`${buildId._id}:${buildId._id}`);
+				user.builds.push(buildId._id);
 				user.save();
 
 				res.status(201).json({});
@@ -33,8 +32,7 @@ const BuildController = function () {
 
 	let findAllBuilds = async (req, res) => {
 		try {
-			let session = await SessionService.getSession(req.params.session);
-			let user = await UserService.getUserById(session.userId);
+			let user = await SessionService.getUserBuilds(req.params.session);
 
 			if (user) {
 				let builds = [];
@@ -53,9 +51,7 @@ const BuildController = function () {
 
 	let saveBuild = async (req, res) => {
 		try {
-			console.log('saveBuild');
-			let session = await SessionService.getSession(req.params.session);
-			let user = await UserService.getUserById(session.userId);
+			let user = await SessionService.getUserBuilds(req.params.session);
 			console.log(user.builds)
 			console.log(user.builds["5c2dd6bd37120e41b81870da"])
 			var i = 0;
@@ -82,9 +78,7 @@ const BuildController = function () {
 
 	let deleteAll = async (req, res) => {
 		try {
-			let session = await SessionService.getSession(req.params.session);
-			let user = await UserService.getUserById(session.userId);
-
+			let user = await SessionService.getUserBuilds(req.params.session);
 
 			await Build.deleteMany({ _id: { $in: user.builds } });
 			user.builds = [];
@@ -97,8 +91,7 @@ const BuildController = function () {
 
 	let deleteBuild = async (req, res) => {
 		try {
-			let session = await SessionService.getSession(req.params.session);
-			let user = await UserService.getUserById(session.userId);
+			let user = await SessionService.getUserBuilds(req.params.session);
 
 			for (var i = 0; i < user.builds.length; i++) {
 				if (user.builds[i]._id == req.params.build) {
