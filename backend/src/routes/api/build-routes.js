@@ -3,17 +3,17 @@ const router = express.Router();
 const BuildController = require('../controller/build-controller');
 
 // get all existing builds for the user
-router.get('/:session', (req, res) => {
+router.get('/session/:session', (req, res) => {
 	BuildController.findAllBuilds(req, res);
 });
 
 // gets build by id
-router.get('/id/:build', (req, res) => {
+router.get('/:build', (req, res) => {
 	BuildController.getBuild(req, res);
 })
 
 // create a new build
-router.post('/:session', (req, res) => {	
+router.post('/save/:session', (req, res) => {	
 	BuildController.createNewBuild(req, res);
 });
 
