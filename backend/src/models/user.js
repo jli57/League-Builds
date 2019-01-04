@@ -15,11 +15,7 @@ const UserSchema = mongoose.Schema({
 	name: {
 		type: String
 	},
-	builds: [{
-		id: {
-			type: String
-		}
-	}]
+	builds: []
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);

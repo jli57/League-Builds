@@ -18,7 +18,8 @@ const BuildController = function () {
 					user: session.userId,
 				}));
 
-				user.builds.push(buildId);
+				console.log(buildId._id)
+				user.builds.push(`${buildId._id}:${buildId._id}`);
 				user.save();
 
 				res.status(201).json({});
@@ -55,15 +56,15 @@ const BuildController = function () {
 			console.log('saveBuild');
 			let session = await SessionService.getSession(req.params.session);
 			let user = await UserService.getUserById(session.userId);
-			//console.log(req.params.build)
-			//console.log(user.builds[req.params.build])
+			console.log(user.builds)
+			console.log(user.builds["5c2dd6bd37120e41b81870da"])
 			var i = 0;
 			for (; i < user.builds.length; i++) {
-				console.log(user.builds[i]._id)
+				//console.log(user.builds[i]._id)
 				if (user.builds[i]._id == req.params.build)
-				 break;
+					break;
 			}
-			console.log(i);
+			//console.log(i);
 			let build = await Build.findByIdAndUpdate(user.builds[i]._id,
 				{
 					champion: req.body.build.champion,
@@ -75,14 +76,28 @@ const BuildController = function () {
 			console.log(build);
 			res.status(204).json({});
 		} catch (ex) {
-			console.log(ex);
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}
 	}
+
+	let deleteAll = async (req, res) => {
+		try {
+			let session = await SessionService.getSession(req.params.session);
+			let user = await UserService.getUserById(session.userId);
+
+			await Build.delete({ _id: { $in: user.build } });
+
+
+		} catch (ex) {
+			res.status(ex.statusCode || 500).json({ errors: ex.msg });
+		}
+	};
+
 	return {
 		createNewBuild: createNewBuild,
 		findAllBuilds: findAllBuilds,
-		saveBuild: saveBuild
+		saveBuild: saveBuild,
+		deleteAll: deleteAll
 	};
 }();
 
