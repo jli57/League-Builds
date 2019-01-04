@@ -98,7 +98,7 @@ app.use('/api/ddragon/champions', championRoutes);
 app.use('/api/ddragon/items', itemRoutes);
 app.use('/api/ddragon/runesreforged', runesReforgedRoutes);
 app.use('/api/ddragon/version', versionRoutes);
-app.use('/api/user/build', buildRoutes);
+app.use('/api/build', buildRoutes);
 
 // set up port
 app.set('port', (process.env.PORT || 8000));
