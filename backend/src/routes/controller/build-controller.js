@@ -87,7 +87,7 @@ const BuildController = function () {
 
 			await Build.delete({ _id: { $in: user.build } });
 
-
+			res.status(200).json({});
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}
