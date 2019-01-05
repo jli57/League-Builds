@@ -31,7 +31,3 @@ export const fetchChampionData = (championKey) => {
   return axios.get(`/api/ddragon/champions/${championKey}`)
   // return $.getJSON(`http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion/${championKey}.json`);
 }
-
-export const fetchChampionSkillIcon = (spellName) => (
-	`http://ddragon.leagueoflegends.com/cdn/8.24.1/img/spell/${spellName}`
-)
