@@ -5,7 +5,8 @@ const { baseURL1,
 	championPath,
 	itemPath,
 	itemImagePath,
-	championImagePath,
+  championImagePath,
+  spellImagePath,
 	runesReforgedImagePath,
 	runesReforgedPath,
 	versions
@@ -45,19 +46,19 @@ const DDragonService = function () {
 
 	let updateChampionImage = (champion) => {
 		champion.image = `${getPath(CHAMPION_IMAGE)}/${champion.image.full}`;
-		champion.passive.image = `http://ddragon.leagueoflegends.com/cdn/8.24.1/img/spell/${champion.passive.image.full}`		
+		champion.passive.image = `http://ddragon.leagueoflegends.com/cdn/8.24.1/img/spell/${champion.passive.image.full}`
 		for (var i = 0; i < champion.spells.length; i++)
-			champion.spells[i].image = `http://ddragon.leagueoflegends.com/cdn/8.24.1/img/spell/${champion.spells[i].image.full}`		
-	};	
+			champion.spells[i].image = `http://ddragon.leagueoflegends.com/cdn/8.24.1/img/spell/${champion.spells[i].image.full}`
+	};
 
 	let insertChampions = async (version) => {
 		try {
 			let res = (await axios.get(getPath(ALL_CHAMPIONS))).data.data;
 
-			Object.keys(res).forEach(async (key, i) => {				
+			Object.keys(res).forEach(async (key, i) => {
 				let champion = (await axios.get(`${getPath(CHAMPION_DATA)}/${key}.json`)).data.data[key];
 
-				updateChampionImage(champion);				
+				updateChampionImage(champion);
 				await Champion.createChampion(new Champion({
 					_id: parseInt(champion.key),
 					name: champion.name,

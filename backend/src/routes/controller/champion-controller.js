@@ -28,7 +28,10 @@ const ChampionController = function () {
 		const result = await axios.get(`${DDragonService.getPath(`CHAMPION_DATA`)}/${championName}.json`);
 		if (result) {
 			let championData = result.data.data[championName];
-			championData.image.full = getChampionImage(result.data.data[championName]);
+      championData.image.full = getChampionImage(result.data.data[championName]);
+      championData.spells.forEach( spell => {
+        spell.image.full = getSpellImage(spell.image.full);
+      });
 			return { [req.params.noun]: championData };
 		}
 		else
