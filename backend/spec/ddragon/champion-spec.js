@@ -1,7 +1,7 @@
 describe("DDragon Champion", function () {
 	const axios = require('axios');
 	const config = {
-		baseURL : 'http://localhost:8000/api/ddragon/champions'
+		baseURL : 'http://localhost:8000/ddragon/champions'
 	}
 
 	it("should retrieve all champions", async (done) => {

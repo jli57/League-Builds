@@ -41,7 +41,6 @@ const UserService = function () {
 			username: user.username,
 			email: user.email,
 			name: user.name,
-			build: user.builds
 		};
 	}
 
