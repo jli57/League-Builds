@@ -1,7 +1,7 @@
 describe("User", function () {
 	const axios = require('axios');
 	const config = {
-		baseURL: 'http://localhost:8000/user'
+		baseURL: 'http://localhost:8000/api/user'
 	};
 	const user = {
 		form: {

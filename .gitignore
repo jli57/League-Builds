@@ -1,6 +1,5 @@
 node_modules/
-client.bundle.jsx
-server.bundle.jsx
+*bundle.js*
 frontend/api_key.js
 server/config/**
 .vscode
