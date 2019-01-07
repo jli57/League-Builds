@@ -7,6 +7,7 @@ router.get('/all', (req, res) => {
 });
 
 router.get('/:noun', (req, res) => {
+	console.log('entered');
 	if (isNaN(req.params.noun))
 		ChampionController.getChampionByName(req, res);
 	else

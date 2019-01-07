@@ -1,5 +1,4 @@
 import React from 'react';
-import { fetchChampionSkillIcon } from '../../utils/api_util';
 
 class ChampionSpells extends React.Component {
   constructor(props) {
@@ -27,7 +26,7 @@ class ChampionSpells extends React.Component {
         <tbody>
           { this.props.spells.map( (spell, i) => (
               <tr key={i}>
-                <td><img src={fetchChampionSkillIcon(spell.image.full)}></img>
+                <td><img src={spell.image.full}></img>
                 <p>{spell.name}</p>
                 </td>
                 <td>{spell.description}</td>

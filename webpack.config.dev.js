@@ -48,7 +48,7 @@ const clientConfig = {
 				test: /\.html$/,
 				use: [
 					{
-						loader: "html-loader"						
+						loader: "html-loader"
 					}
 				]
 			},
@@ -73,10 +73,14 @@ const clientConfig = {
 			template: './dist/index.html',
 		}),
 	],
+	devServer: {
+		port: 3000,
+		proxy: {
+			'/api': 'http://localhost:8000',
 
-	// devServer: {
-	// 	port: 3000,
-	// }
+		}
+	}
+
 };
 
 

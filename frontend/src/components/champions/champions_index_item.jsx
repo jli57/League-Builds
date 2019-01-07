@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const ChampionsIndexItem = ({champion, fetchChampionData}) => {
 
   const handleClick = () => {
-    return fetchChampionData(champion.id);
+    return fetchChampionData(champion.key);
   }
 
   return (

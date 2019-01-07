@@ -8,10 +8,10 @@ export const receiveChampions = (champions) => ({
   champions
 });
 
-export const fetchChampions = () => {
-  return (dispatch) => {
-    return APIUtil.fetchChampions().then(
-      (res) => dispatch(receiveChampions(res.data))
-    );
-  }
+export const fetchChampions = () => dispatch => {
+  return APIUtil.fetchChampions().then(
+    (res) => {
+      dispatch(receiveChampions(res.data))
+    }
+  );
 }
