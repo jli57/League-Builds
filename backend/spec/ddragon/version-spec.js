@@ -1,6 +1,6 @@
 const axios = require('axios');
 const config = {
-	baseURL: 'http://localhost:8000/ddragon/version'
+	baseURL: 'http://localhost:8000/api/ddragon/version'
 };
 describe('Version api', () => {
 	it('should get the latest version', async (done) => {

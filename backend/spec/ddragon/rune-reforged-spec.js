@@ -1,7 +1,7 @@
 describe('DDragon Rune Reforged', () => {
 	const axios = require('axios');
 	const config = {
-		baseURL: 'http://localhost:8000/ddragon/runesreforged'
+		baseURL: 'http://localhost:8000/ddragon/api/runesreforged'
 	}
 
 	it('should retrieve all reforged runes', async (done) => {

@@ -1,7 +1,7 @@
 describe('DDragon Item', function () {
 	const axios = require('axios');
 	const config = {
-		baseURL: 'http://localhost:8000/ddragon/items'
+		baseURL: 'http://localhost:8000/api/ddragon/items'
 	}
 
 	it('should get all items', async (done) => {
