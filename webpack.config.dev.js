@@ -73,7 +73,6 @@ const clientConfig = {
 			template: './dist/index.html',
 		}),
 	],
-
 	devServer: {
 		port: 3000,
 		proxy: {
@@ -81,6 +80,7 @@ const clientConfig = {
 
 		}
 	}
+
 };
 
 

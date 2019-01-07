@@ -77,10 +77,14 @@ app.use(expressValidator({
     }
 }));
 
+app.use(express.static('dist'));
+app.use(express.static('./frontend/src/styles/css'));
+
+
 // render the main page
-// app.get('/', (req, res) => {
-// 	res.sendFile('dist/index.html', {root: __dirname});
-// });
+app.get('/', (req, res) => {
+	res.sendFile('dist/index.html', {root: "./"});
+});
 
 // let allowCrossDomain = (req, res, next) => {
 // 	res.header('Access-Control-Allow-Origin', 'http://localhost');
