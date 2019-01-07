@@ -1,4 +1,4 @@
-const { DDragonService, CHAMPION_DATA, CHAMPION_IMAGE, ALL_CHAMPIONS } = require('../services/ddragon-service');
+const { DDragonService, CHAMPION_DATA, SPELL_IMAGE, CHAMPION_IMAGE, ALL_CHAMPIONS } = require('../services/ddragon-service');
 const HttpError = require('../../errors/HttpError');
 const axios = require('axios');
 
@@ -73,7 +73,12 @@ const ChampionController = function () {
 
 	let getChampionImage = (champion) => {
 		return `${DDragonService.getPath(CHAMPION_IMAGE)}/${champion.image.full}`;
+  }
+
+	let getSpellImage = (spellName) => {
+		return `${DDragonService.getPath(SPELL_IMAGE)}/${spellName}`;
 	}
+
 
 	let getChampionImageById = async (req, res) => {
 		try {
