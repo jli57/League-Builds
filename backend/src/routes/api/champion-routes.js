@@ -19,4 +19,8 @@ router.get('/:id', (req, res) => {
    }
 });
 
+router.get('/:id/:version', (req, res) => {
+   throw new Error('unimplemented');
+})
+
 module.exports = router;
