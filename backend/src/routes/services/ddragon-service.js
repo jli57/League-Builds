@@ -53,7 +53,8 @@ const DDragonService = function () {
    let insertChampions = async (version) => {
       try {
          let res = (await axios.get(getPath(ALL_CHAMPIONS))).data.data;
-
+         //let newVersion = replacePeriod(req.params.version);
+          let newVersion = version.replace(/\./g, '_');
          Object.keys(res).forEach(async (key, i) => {
             let champion = (await axios.get(`${getPath(CHAMPION_DATA)}/${key}.json`)).data.data[key];
 
@@ -66,18 +67,19 @@ const DDragonService = function () {
                tags: champion.tags,
 
                versions: {
-                  [version]: {
+                  [newVersion]: {
                      spells: champion.spells,
                      passive: champion.passive,
                      stats: champion.stats
                   }
                }
-            }));
+            }), newVersion);
          });
 
          return true;
       } catch (ex) {
-         res.status(404).json({});
+         console.log(ex.msg);
+         return res.status(404).json({});
       }
    };
 
