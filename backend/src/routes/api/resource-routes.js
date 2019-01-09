@@ -6,4 +6,8 @@ router.put('/champion/:version', (req, res) => {
 	ResourceController.insertChampions(req, res);
 });
 
+router.put('/item/:version', (req, res) => {
+	ResourceController.insertItems(req, res);
+});
+
 module.exports = router;

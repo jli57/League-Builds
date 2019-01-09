@@ -1,6 +1,7 @@
 const { DDragonService, ITEM_DATA, ITEM_IMAGE } = require('../services/ddragon-service');
 const HttpError = require('../../errors/HttpError');
 const axios = require('axios');
+const Item = require('../../models/item');
 
 const ItemController = function () {
 	let exists = (obj, res) => {
@@ -19,7 +20,7 @@ const ItemController = function () {
 			throw new HttpError(404, 'DDragon is down');
 	};
 
-	let itemIdAPI = async (req, res) => {		
+	let itemIdAPI = async (req, res) => {
 		return (await itemAPI(req, res))[req.params.id];
 	}
 
@@ -28,16 +29,18 @@ const ItemController = function () {
 	}
 
 	let getAllItems = async (req, res) => {
-		try {
-			res.status(200).json(await itemAPI(req, res));
-		} catch (ex) {
-			res.status(ex.statusCode || 500).json({ errors: ex.msg });
-		}
+		// try {
+		// 	res.status(200).json(await itemAPI(req, res));
+		// } catch (ex) {
+		// 	res.status(ex.statusCode || 500).json({ errors: ex.msg });
+      // }
+      return res.status(200).json(await Item.find());
+
 	};
 
 	let getItemById = async (req, res) => {
 		try {
-			res.status(200).json(await itemIdAPI(req, res));			
+			res.status(200).json(await itemIdAPI(req, res));
 		} catch (ex) {
 			res.status(ex.statusCode || 500).json({ errors: ex.msg });
 		}
