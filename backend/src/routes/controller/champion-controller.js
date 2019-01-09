@@ -6,7 +6,7 @@ const Champion = require('../../models/champion');
 const ChampionController = function () {
 
    let getAllChampions = async (req, res) => {
-      return res.status(200).json(await Champion.find({}, { versions: 0 }));
+      return res.status(200).json(await Champion.find());
    };
 
    let getChampionById = async (req, res) => {

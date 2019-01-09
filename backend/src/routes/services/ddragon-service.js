@@ -22,6 +22,7 @@ const RUNESREFORGED_IMAGE = 'RUNESREFORGED_IMAGE';
 const VERSION = 'VERSION';
 const axios = require('axios');
 const Champion = require('../../models/champion');
+const Item = require('../../models/item');
 
 const DDragonService = function () {
    let getPath = token => {
@@ -39,10 +40,6 @@ const DDragonService = function () {
       }
    };
 
-   let replacePeriod = (key) => {
-      return key.replace('.', '_');
-   }
-
    let updateChampionImage = (champion) => {
       champion.image = `${getPath(CHAMPION_IMAGE)}/${champion.image.full}`;
       champion.passive.image = `http://ddragon.leagueoflegends.com/cdn/8.24.1/img/spell/${champion.passive.image.full}`
@@ -50,10 +47,14 @@ const DDragonService = function () {
          champion.spells[i].image = `http://ddragon.leagueoflegends.com/cdn/8.24.1/img/spell/${champion.spells[i].image.full}`
    };
 
+   let updateItemImage = (item) => {
+      return `${getPath(ITEM_IMAGE)}/${item.image.full}`;
+   };
+
    let insertChampions = async (version) => {
       try {
          let res = (await axios.get(getPath(ALL_CHAMPIONS))).data.data;
-
+         let newVersion = version.replace(/\./g, '_');
          Object.keys(res).forEach(async (key, i) => {
             let champion = (await axios.get(`${getPath(CHAMPION_DATA)}/${key}.json`)).data.data[key];
 
@@ -66,23 +67,51 @@ const DDragonService = function () {
                tags: champion.tags,
 
                versions: {
-                  [version]: {
+                  [newVersion]: {
                      spells: champion.spells,
                      passive: champion.passive,
                      stats: champion.stats
                   }
                }
-            }));
+            }), newVersion);
          });
 
          return true;
       } catch (ex) {
-         res.status(404).json({});
+         console.log(ex.msg);
+         return res.status(404).json({});
       }
+   };
+
+   let insertItems = async (version) => {
+      let res = (await axios.get(getPath(ITEM_DATA))).data.data
+      let newVersion = version.replace(/\./g, '_');
+
+      Object.keys(res).forEach(async (key, i) => {
+         await Item.createItem(new Item({
+            _id: key,
+            name: res[key].name,
+
+            versions: {
+               [newVersion]: {
+                  image: updateItemImage(res[key]),
+                  tags: res[key].tags,
+                  description: res[key].description,
+                  into: res[key].into,
+                  gold: res[key].gold,
+                  maps: res[key].maps,
+                  stats: res[key].stats
+               }
+            }
+         }), newVersion);
+      });
+
+      return true;
    };
 
    return {
       insertChampions: insertChampions,
+      insertItems: insertItems,
       getPath: getPath
    }
 }();
