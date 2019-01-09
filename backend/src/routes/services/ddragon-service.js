@@ -39,10 +39,6 @@ const DDragonService = function () {
       }
    };
 
-   let replacePeriod = (key) => {
-      return key.replace('.', '_');
-   }
-
    let updateChampionImage = (champion) => {
       champion.image = `${getPath(CHAMPION_IMAGE)}/${champion.image.full}`;
       champion.passive.image = `http://ddragon.leagueoflegends.com/cdn/8.24.1/img/spell/${champion.passive.image.full}`
@@ -53,8 +49,7 @@ const DDragonService = function () {
    let insertChampions = async (version) => {
       try {
          let res = (await axios.get(getPath(ALL_CHAMPIONS))).data.data;
-         //let newVersion = replacePeriod(req.params.version);
-          let newVersion = version.replace(/\./g, '_');
+         let newVersion = version.replace(/\./g, '_');
          Object.keys(res).forEach(async (key, i) => {
             let champion = (await axios.get(`${getPath(CHAMPION_DATA)}/${key}.json`)).data.data[key];
 
