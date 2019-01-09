@@ -12,7 +12,7 @@ const ChampionsIndexItem = ({champion, fetchChampionData}) => {
     <li onClick={ handleClick } className="champion-icon">
       <Link to="/build">
         <ChampionIcon champion={champion}/>
-        <p className="champion-name">{ champion.name }</p>
+         <p className="champion-name">{ champion.name }</p>
       </Link>
     </li>
   )
