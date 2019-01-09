@@ -11,7 +11,11 @@ router.get('/all', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-	ItemController.getItemById(req, res);
+   try {
+      ItemController.getItemById(req, res);
+   } catch (ex) {
+      res.status(ex.statusCode || 500).json({ errors: ex.msg });
+   }
 })
 
 module.exports = router;
