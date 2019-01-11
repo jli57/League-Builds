@@ -1,12 +1,10 @@
 export const selectChampions = (champions) => {
-  return Object.keys(champions).map(championName => champions[championName] );
+  return Object.values(champions);
 }
 
-export const selectChampion = (champion) => {
-  if ( $.isEmptyObject(champion) ) {
-    return []; 
-  }
-  return Object.values(champion)[0];;
+
+export const selectItem = (items) => {
+  return Object.values(items);
 }
 
 export const filterChampions = (champions, searchTerm) => {

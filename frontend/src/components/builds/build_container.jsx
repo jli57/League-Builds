@@ -4,7 +4,7 @@ import { selectChampion } from '../../reducers/selectors';
 
 const mapStateToProps = state => {
   return {
-    champion: selectChampion(state.build.champion),
+    champion: state.build.champion,
   };
 };
 

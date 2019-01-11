@@ -6,7 +6,7 @@ const ChampionsIndex = ({champions, fetchChampionData}) => {
     <ul className="champion-list">
       { champions.map(champion => (
           <ChampionsIndexItem
-            key={champion._id}
+            key={champion.id}
             champion={champion}
             fetchChampionData={fetchChampionData} />)
         )

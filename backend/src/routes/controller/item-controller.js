@@ -5,13 +5,22 @@ const Item = require('../../models/item');
 
 const ItemController = function () {
 	let getAllItems = async (req, res) => {
-      return res.status(200).json(await Item.find());
+      const items =  await Item.find({}, {name: 1, "versions.8_24_1.image": 1 } ).sort({name: 1});
+      let itemsData = {};
+      items.forEach( item => {
+        itemsData[item._id] = {
+          id: item._id,
+          name: item.name,
+          image: item.versions['8_24_1'].image
+        }
+      });
+      return res.status(200).json(itemsData);
 	};
 
 	let getItemById = async (req, res) => {
       let item = await Item.findById(req.params.id);
-		return res.status(200).json({
-         [item._id]:{
+		  return res.status(200).json({
+         [item._id]: {
             id: item._id,
             name: item.name,
             patch: '8.24.1',
