@@ -8,7 +8,7 @@ export const buildsReducer = ( state = initialState, action ) => {
   switch(action.type) {
     case RECEIVE_CHAMPION:
       let newState = merge({}, state);
-      newState.champion = action.champion;
+      newState.champion = Object.values(action.champion)[0];
       return newState;
     default:
       return state;
