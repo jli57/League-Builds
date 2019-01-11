@@ -1,14 +1,13 @@
-import 'babel-polyfill';
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledChampionIcon = styled.img`
-  width: 100%;
+export const StyledChampionIcon = styled.img`
+  width: 100px;
 `;
 
 const ChampionIcon = ({champion}) => {
   return (
-    <StyledChampionIcon className="champion-img-icon"
+    <StyledChampionIcon
       src={ champion.image }
       alt={ champion.name } />
   );
