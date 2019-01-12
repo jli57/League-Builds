@@ -1,6 +1,4 @@
-const { DDragonService, ITEM_DATA, ITEM_IMAGE } = require('../services/ddragon-service');
 const HttpError = require('../../errors/HttpError');
-const axios = require('axios');
 const Item = require('../../models/item');
 
 const ItemController = function () {
