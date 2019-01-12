@@ -1,6 +1,4 @@
-const { DDragonService, CHAMPION_DATA, SPELL_IMAGE, CHAMPION_IMAGE, ALL_CHAMPIONS } = require('../services/ddragon-service');
 const HttpError = require('../../errors/HttpError');
-const axios = require('axios');
 const Champion = require('../../models/champion');
 const Resource = require('../../models/resource');
 
