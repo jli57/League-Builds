@@ -2,11 +2,18 @@ const { DDragonService, CHAMPION_DATA, SPELL_IMAGE, CHAMPION_IMAGE, ALL_CHAMPION
 const HttpError = require('../../errors/HttpError');
 const axios = require('axios');
 const Champion = require('../../models/champion');
+const Resource = require('../../models/resource');
 
 const ChampionController = function () {
 
+   let latestVersion = async (req, res) => {
+      return (await Resource.findOne({})).versions[0].replace(/\./g, '_');
+   }
+
    let getAllChampions = async (req, res) => {
-      const champions = await Champion.find({}, {name: 1, image: 1}).sort({ name: 1 });
+      let latest = (await latestVersion())
+      const champions = await Champion.find({[`versions.${latest}`]: {$exists: true}}, {name: 1, image: 1}).sort({ name: 1 });
+
       let championsData = {};
       champions.forEach( champion => {
         championsData[champion._id] = {
@@ -19,7 +26,9 @@ const ChampionController = function () {
    };
 
    let getChampionById = async (req, res) => {
-      let champion = await Champion.findById(req.params.id);
+      let latest = (await latestVersion())
+      let champion = await Champion.findOne({_id: req.params.id, [`versions.${latest}`]: {$exists: true}});
+
 
       return res.status(200).json({
          [champion._id]: {
@@ -28,10 +37,9 @@ const ChampionController = function () {
             title: champion.title,
             image: champion.image,
             tags: champion.tags,
-            patch: '8.24.1',
-            stats: champion.versions['8_24_1'].stats,
-            spells: champion.versions['8_24_1'].spells,
-            passive: champion.versions['8_24_1'].passive,
+            stats: champion.versions[latest].stats,
+            spells: champion.versions[latest].spells,
+            passive: champion.versions[latest].passive,
          }
       });
    };
