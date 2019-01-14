@@ -1,41 +1,36 @@
 const HttpError = require('../../errors/HttpError');
 const Item = require('../../models/item');
-const Resource = require('../../models/resource');
+const ResourceService = require('../services/resource-service');
 
 const ItemController = function () {
-   let latestVersion = async (req, res) => {
-      return (await Resource.findOne({})).versions[0].replace(/\./g, '_');
-   }
 
    let getAllItems = async (req, res) => {
-      let latest = (await latestVersion())
-      const items = await Item.find({ [`versions.${latest}`]: { $exists: true } }, { name: 1, "versions.8_24_1.image": 1 }).sort({ name: 1 });
+      let {latest, result} = await ResourceService.findLatestModel(Item);
 
       let itemsData = {};
-      items.forEach(item => {
+      result.forEach(item => {
          itemsData[item._id] = {
             id: item._id,
             name: item.name,
-            image: item.versions['8_24_1'].image
+            image: item.versions[latest].image
          }
       });
       return res.status(200).json(itemsData);
    };
 
    let getItemById = async (req, res) => {
-      let latest = (await latestVersion())
-      let item = await Item.findById({ _id: req.params.id, [`versions.${latest}`]: { $exists: true } });
+      let {latest, result} = await ResourceService.findLatestModelById(req.params.id, Champion);
 
       return res.status(200).json({
-         [item._id]: {
-            id: item._id,
-            name: item.name,
-            tags: item.versions[latest].tags,
-            image: item.versions[latest].image,
-            description: item.versions[latest].description,
-            into: item.versions[latest].into,
-            gold: item.versions[latest].gold,
-            maps: item.versions[latest].maps
+         [result._id]: {
+            id: result._id,
+            name: result.name,
+            tags: result.versions[latest].tags,
+            image: result.versions[latest].image,
+            description: result.versions[latest].description,
+            into: result.versions[latest].into,
+            gold: result.versions[latest].gold,
+            maps: result.versions[latest].maps
          }
       });
    };
